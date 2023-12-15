@@ -15,6 +15,9 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
-    apiBasePath: process.env.BACKEND_API_BASE_PATH
+    apiBasePath: process.env.BACKEND_API_BASE_PATH,
+      public: {
+        apiBasePath: process.env.BACKEND_API_BASE_PATH
+      }
   }
 })
