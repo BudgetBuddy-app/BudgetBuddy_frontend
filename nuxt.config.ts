@@ -2,7 +2,8 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    'nuxt-icon'
   ],
   app: {
     head: {
@@ -16,8 +17,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     apiBasePath: process.env.BACKEND_API_BASE_PATH,
-      public: {
-        apiBasePath: process.env.BACKEND_API_BASE_PATH
-      }
+    public: {
+      apiBasePath: process.env.BACKEND_API_BASE_PATH
+    }
   }
 })

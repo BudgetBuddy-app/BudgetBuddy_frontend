@@ -1,7 +1,6 @@
 <template>
     <div>
-        <h2>Home</h2>
-        <ComponentTest />
+        <h2>Investments</h2>
     </div>
 </template>
 
