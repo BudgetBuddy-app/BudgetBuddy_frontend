@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <body>
         <h2>Documentation</h2>
         <div v-for="number in numbers">{{ number }}</div>
-    </div>
+    </body>
 </template>
 
 <script setup>

@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <body>
         <h2>Home</h2>
         <ComponentTest />
-    </div>
+    </body>
 </template>
 
 <script setup>
