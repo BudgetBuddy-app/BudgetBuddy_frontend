@@ -1,9 +1,9 @@
 <template>
-    <body>
+    <div>
         <h2>Dashboard</h2>
         <div v-for="number in numbers">{{ number }}</div>
 
-    </body>
+    </div>
 </template>
 
 <script setup>

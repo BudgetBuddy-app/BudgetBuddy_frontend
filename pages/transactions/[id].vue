@@ -1,7 +1,7 @@
 <template>
-    <body>
+    <div>
         <h2>Transaction id: {{ id }} </h2>
-    </body>
+    </div>
 </template>
 
 <script setup>

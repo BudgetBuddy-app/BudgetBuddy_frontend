@@ -1,7 +1,8 @@
 <template>
-    <body>
+    <div>
         <h2>User</h2>
-    </body>
+        <Logout />
+    </div>
 </template>
 
 <script setup>

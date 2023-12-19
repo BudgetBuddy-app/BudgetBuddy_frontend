@@ -17,7 +17,7 @@ const authStore = useAuthStore()
 
 async function login() {
   try {
-    //TODO finda  way to make these paths constant
+    //TODO find a way to make these paths constant
     const response = await $fetch('http://localhost:3001/users/login', {
       method: 'POST',
       body: {
@@ -26,7 +26,7 @@ async function login() {
       }
     })
 
-    // Assuming the server responds with a token
+    //TODO save user info to use on other pages and requests
     console.log(response)
     const token = response.token
 
@@ -34,11 +34,8 @@ async function login() {
     authStore.setToken(token)
     console.log("Login successful!")
     await navigateTo('/dashboard')
-
-    // Redirect or perform other actions after successful login
   } catch (error) {
     //TODO; show error or smthn,  Handle login error
-  
     console.error('Login failed:', error)
   }
 }

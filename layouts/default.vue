@@ -36,14 +36,13 @@
                 </ul>
                 <ul class="flex justify-end items-center right-0 w-2/12">
                     <li class="mr-5">
-                        <NuxtLink to="/user">
-                            <Icon name="ph:user" size="30" />
+                        <NuxtLink to="/settings">
+                            <Icon name="ic:baseline-settings" size="30"/>
                         </NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink to="/settings">
-
-                        <Icon name="ic:baseline-settings" size="30"/>
+                        <NuxtLink to="/user">
+                            <Icon name="ph:user" size="30" />
                         </NuxtLink>
                     </li>
                 </ul>

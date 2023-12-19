@@ -1,5 +1,7 @@
 <template>
-  <button @click="logout">Logout</button>
+  <div class="bg-red-500">
+    <button @click="logout">Logout</button>
+  </div>
 </template>
  
 <script setup>
@@ -9,9 +11,8 @@ import { useAuthStore } from '~/store/auth'
 const store = useAuthStore()
 
 async function logout() {
-  //TODO clean token from store
   store.removeToken()
-  // Redirect or perform other actions after logout
+  await navigateTo('/')
 }
 </script>
  

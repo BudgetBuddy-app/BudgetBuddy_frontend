@@ -1,11 +1,8 @@
 <template>
-    <body>
+    <div>
         <h2>Home</h2>
         <Login />
-        <br>
-        <hr><br>
-        <Logout />
-    </body>
+    </div>
 </template>
 
 <script setup>

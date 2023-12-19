@@ -1,7 +1,7 @@
 <template>
-    <body>
+    <div>
         <h2>Account id: {{ id }} </h2>
-    </body>
+    </div>
 </template>
 
 <script setup>
