@@ -27,11 +27,9 @@ async function login() {
     })
 
     //TODO save user info to use on other pages and requests
-    console.log(response)
-    const token = response.token
 
     // Store the token 
-    authStore.setToken(token)
+    authStore.setToken(response.token)
     console.log("Login successful!")
     await navigateTo('/dashboard')
   } catch (error) {
