@@ -1,10 +1,17 @@
 <template>
     <div>
         <h2>Home</h2>
-        <ComponentTest />
+        <Login />
+        <br>
+        <hr><br>
+        <Logout />
     </div>
 </template>
 
 <script setup>
+
+definePageMeta({
+    layout: 'minimal'
+})
 
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col min-h-screen">
-        <header class="bg-primary">
+        <header class="bg-primary items-center">
             <nav>
                 <ul class="flex justify-between">
                    <li>
@@ -27,7 +27,7 @@
         <div class="flex-grow">
             <slot class="bg-tertiary"/>
         </div>
-        <footer class="flex bg-secondary">
+        <footer class="flex bg-secondary items-center">
             <div class="w-1/2">
                 <NuxtLink to="/documentation" class="btn">documentation</NuxtLink>
             </div>

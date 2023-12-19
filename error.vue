@@ -8,9 +8,17 @@
 
     <button class="btn" @click="handleClearError">Go Home...</button>
 </template>
-
+ 
 <script setup>
-defineProps(['error'])
+const props = defineProps(['error'])
 
-const handleClearError = () => clearError({ redirect: '/'})
+onMounted(() => {
+    //TODO set a variable in the .env for debugging, that enables console.logs like this throughout the app that the user shouldn't normally see
+    console.log(props.error)
+})
+
+const handleClearError = () => {
+    clearError({ redirect: '/' })
+}
 </script>
+ 
