@@ -5,7 +5,7 @@
                 <ul class="flex justify-center">
                     <li>
                         <NuxtLink to="/dashboard" class="btn">
-                            <Icon name="material-symbols:home" />dashboard
+                            <Icon name="material-symbols:home" />
                         </NuxtLink>
                     </li>
                 </ul>
