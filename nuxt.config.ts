@@ -17,9 +17,8 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
-    apiBasePath: process.env.BACKEND_API_BASE_PATH,
     public: {
-      apiBasePath: process.env.BACKEND_API_BASE_PATH
+      BACKEND_API_BASE_PATH: process.env.BACKEND_API_BASE_PATH || "http://localhost:3001"
     }
   }
 })

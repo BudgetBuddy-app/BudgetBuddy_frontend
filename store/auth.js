@@ -1,16 +1,18 @@
 import { defineStore } from 'pinia'
+import { useRuntimeConfig } from '#app'
 
 export const useAuthStore = defineStore('authStore', () => {
-    //1 day expiry date
+    const runtimeConfig = useRuntimeConfig()
     let accessToken = ''
     let currentToken = ''
     validateTokenOnStart()
     async function validateTokenOnStart() {
         try {
+            //1 day expiry date
             accessToken = useCookie('accessToken', { maxAge: 86400 })
             currentToken = accessToken.value
             //TODO find a way to make these paths constant
-            const response = await $fetch('http://localhost:3001/auth/validate', {
+            const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/auth/validate', {
                 method: 'GET',
                 headers: {
                     'access-token': accessToken.value

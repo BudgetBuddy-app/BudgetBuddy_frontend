@@ -9,16 +9,18 @@
 <script setup>
 import { ref } from 'vue'
 import { useAuthStore } from '~/store/auth'
+import { useRuntimeConfig } from '#app'
+
 
 const email = ref('')
 const password = ref('')
 
 const authStore = useAuthStore()
+const runtimeConfig = useRuntimeConfig()
 
 async function login() {
   try {
-    //TODO find a way to make these paths constant
-    const response = await $fetch('http://localhost:3001/auth/login', {
+    const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/auth/login', {
       method: 'POST',
       body: {
         email: email.value,
