@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col min-h-screen">
-        <header class="bg-primary">
+        <header class="bg-primary py-3 sticky top-0">
             <nav>
                 <ul class="flex justify-center">
                     <li>
@@ -12,13 +12,10 @@
             </nav>
         </header>
         <div class="flex-grow">
-            <slot class="bg-tertiary" />
+            <slot />
         </div>
-        <footer class="flex bg-secondary">
-            <div class="w-1/2">
-                <NuxtLink to="/documentation" class="btn">documentation</NuxtLink>
-            </div>
-            <div class="w-1/2">
+        <footer class="flex justify-between bg-secondary items-center px-10">
+            <div>
                 <div>made by Diogo Ferreira</div>
                 <div>
                     <NuxtLink to="https://www.github.com/diogo-febra-ferreira/">
@@ -31,6 +28,11 @@
                     </NuxtLink>
                 </div>
             </div>
+            <div>
+                <NuxtLink to="/documentation" class="btn">
+                    <Icon name="basil:document-outline" />documentation
+                </NuxtLink>
+            </div>
         </footer>
     </div>
 </template>
@@ -38,3 +40,9 @@
 <script setup>
 
 </script>
+
+<style scoped>
+.router-link-exact-active {
+    @apply btn;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
     <body>
-        <h2>Transactions</h2>
+        <h2>User</h2>
     </body>
 </template>
 
