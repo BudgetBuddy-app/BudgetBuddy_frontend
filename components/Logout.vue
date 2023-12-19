@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-red-500">
-    <button @click="logout">Logout</button>
+  <div>
+    <button @click="logout" class="bg-secondary">Logout</button>
   </div>
 </template>
  

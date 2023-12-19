@@ -18,7 +18,7 @@ const authStore = useAuthStore()
 async function login() {
   try {
     //TODO find a way to make these paths constant
-    const response = await $fetch('http://localhost:3001/users/login', {
+    const response = await $fetch('http://localhost:3001/auth/login', {
       method: 'POST',
       body: {
         email: email.value,
