@@ -28,12 +28,18 @@ async function login() {
       }
     })
 
-    //TODO save user info to use on other pages and requests
+    if (response.Login) {
+      authStore.setToken(response.token)
+      authStore.setAuthenticatedUser(response.User)
+      console.log("Login successful!")
+      await navigateTo('/dashboard')
+    } else {
+      //TODO; show error or smthn,  Handle login error
+      console.error('Login failed:', response.Message)
 
-    // Store the token 
-    authStore.setToken(response.token)
-    console.log("Login successful!")
-    await navigateTo('/dashboard')
+    }
+
+
   } catch (error) {
     //TODO; show error or smthn,  Handle login error
     console.error('Login failed:', error)
