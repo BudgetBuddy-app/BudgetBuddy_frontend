@@ -2,7 +2,7 @@
   <form @submit.prevent="login">
     <input v-model="email" type="text" placeholder="Email" />
     <input v-model="password" type="password" placeholder="Password" />
-    <button type="submit">Login</button>
+    <UButton type="submit">Login</UButton>
   </form>
 </template>
  
@@ -10,7 +10,6 @@
 import { ref } from 'vue'
 import { useAuthStore } from '~/store/auth'
 import { useRuntimeConfig } from '#app'
-
 
 const email = ref('')
 const password = ref('')

@@ -8,7 +8,7 @@
       <input type="email" v-model="user.email" />
       <label>Password:</label>
       <input type="password" v-model="user.password" />
-      <button type="submit">Submit</button>
+      <UButton type="submit">Submit</UButton>
     </form>
   </div>
 </template>
@@ -38,6 +38,7 @@ const submitForm = async () => {
       }
     })
 
+    //TODO, here we go automatilcally to main page, but validate the response code and see if it was successful or not, to shown an error
     await navigateTo('/dashboard')
 
   } catch (error) {

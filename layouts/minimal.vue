@@ -4,7 +4,7 @@
             <nav>
                 <ul class="flex justify-center">
                     <li>
-                        <NuxtLink to="/dashboard" class="btn">
+                        <NuxtLink to="/dashboard">
                             <Icon name="material-symbols:home" />
                         </NuxtLink>
                     </li>
@@ -18,14 +18,18 @@
             <div>
                 <div>made by Diogo Ferreira</div>
                 <div>
-                <NuxtLink to="https://www.github.com/diogo-febra-ferreira/"> <Icon name="mdi:linkedin" color="blue"/>Github</NuxtLink>
+                    <NuxtLink to="https://www.github.com/diogo-febra-ferreira/">
+                        <Icon name="mdi:linkedin" color="blue" />Github
+                    </NuxtLink>
+                </div>
+                <div>
+                    <NuxtLink to="https://www.linkedin.com/in/diogo-febra-ferreira/">
+                        <Icon name="mdi:github" color="blue" />Linkedin
+                    </NuxtLink>
+                </div>
             </div>
             <div>
-                <NuxtLink to="https://www.linkedin.com/in/diogo-febra-ferreira/"> <Icon name="mdi:github" color="blue" />Linkedin</NuxtLink>
-            </div>
-            </div>
-            <div>
-                <NuxtLink to="/documentation" class="btn">
+                <NuxtLink to="/documentation">
                     <Icon name="basil:document-outline" />documentation
                 </NuxtLink>
             </div>
@@ -38,7 +42,5 @@
 </script>
 
 <style scoped>
-.router-link-exact-active {
-    @apply btn;
-}
+.router-link-exact-active {}
 </style>

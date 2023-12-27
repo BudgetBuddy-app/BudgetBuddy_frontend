@@ -4,7 +4,7 @@
             <nav class="px-10 flex">
                 <ul class="flex justify-between items-center w-10/12">
                     <li>
-                        <NuxtLink to="/dashboard" class="btn">
+                        <NuxtLink to="/dashboard">
                             <Icon name="material-symbols:home" /> dashboard
                         </NuxtLink>
                     </li>
@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div>
-                <NuxtLink to="/documentation" class="btn">
+                <NuxtLink to="/documentation">
                     <Icon name="basil:document-outline" />documentation
                 </NuxtLink>
             </div>

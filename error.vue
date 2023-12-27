@@ -6,7 +6,7 @@
         <p>{{ error.message }}</p>
     </div>
 
-    <button class="btn" @click="handleClearError">Go Home...</button>
+    <UButton @click="handleClearError">Go Home...</UButton>
 </template>
  
 <script setup>

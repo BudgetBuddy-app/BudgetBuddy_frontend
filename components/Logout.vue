@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="logout" class="bg-secondary">Logout</button>
+    <UButton @click="logout" class="bg-secondary">Logout</UButton>
   </div>
 </template>
  
