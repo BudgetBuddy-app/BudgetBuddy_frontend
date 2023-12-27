@@ -2,16 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    @apply bg-tertiary;
+h6 {
+    @apply py-0;
 }
 
 .router-link-exact-active {
-    @apply bg-secondary px-2 py-2 rounded-md;
+    @apply bg-primary-700 px-2 py-2 rounded-md;
 }
 
 @layer components {
     .btn {
-        @apply bg-accent px-2 py-2 rounded-md;
+        @apply bg-primary-700 px-2 py-2 rounded-md;
     }
 }

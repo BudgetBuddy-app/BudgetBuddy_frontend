@@ -14,7 +14,7 @@
         <div class="flex-grow">
             <slot />
         </div>
-        <footer class="flex justify-between bg-secondary items-center px-10">
+        <footer class="flex justify-between bg-primary items-center px-10">
             <div>
                 <div>made by Diogo Ferreira</div>
                 <div>
