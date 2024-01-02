@@ -1,7 +1,7 @@
 <template>
-    <body>
+    <div>
         <h2>Budgets</h2>
-    </body>
+    </div>
 </template>
 
 <script setup>

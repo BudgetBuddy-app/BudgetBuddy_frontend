@@ -4,7 +4,7 @@
             <nav class="px-10 flex">
                 <ul class="flex justify-between items-center w-10/12">
                     <li>
-                        <NuxtLink to="/dashboard" class="btn">
+                        <NuxtLink to="/dashboard">
                             <Icon name="material-symbols:home" /> dashboard
                         </NuxtLink>
                     </li>
@@ -36,14 +36,13 @@
                 </ul>
                 <ul class="flex justify-end items-center right-0 w-2/12">
                     <li class="mr-5">
-                        <NuxtLink to="/user">
-                            <Icon name="ph:user" size="30" />
+                        <NuxtLink to="/settings">
+                            <Icon name="ic:baseline-settings" size="30"/>
                         </NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink to="/settings">
-
-                        <Icon name="ic:baseline-settings" size="30"/>
+                        <NuxtLink to="/user">
+                            <Icon name="ph:user" size="30" />
                         </NuxtLink>
                     </li>
                 </ul>
@@ -52,7 +51,7 @@
         <div class="flex-grow">
             <slot />
         </div>
-        <footer class="flex justify-between bg-secondary items-center px-10">
+        <footer class="flex justify-between bg-primary items-center px-10">
             <div>
                 <div>made by Diogo Ferreira</div>
                 <div>
@@ -67,7 +66,7 @@
                 </div>
             </div>
             <div>
-                <NuxtLink to="/documentation" class="btn">
+                <NuxtLink to="/documentation">
                     <Icon name="basil:document-outline" />documentation
                 </NuxtLink>
             </div>

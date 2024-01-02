@@ -1,7 +1,7 @@
 <template>
-    <body>
+    <div>
         <h2>Transactions</h2>
-    </body>
+    </div>
 </template>
 
 <script setup>

@@ -4,8 +4,8 @@
             <nav>
                 <ul class="flex justify-center">
                     <li>
-                        <NuxtLink to="/dashboard" class="btn">
-                            <Icon name="material-symbols:home" />dashboard
+                        <NuxtLink to="/dashboard">
+                            <Icon name="material-symbols:home" />
                         </NuxtLink>
                     </li>
                 </ul>
@@ -14,7 +14,7 @@
         <div class="flex-grow">
             <slot />
         </div>
-        <footer class="flex justify-between bg-secondary items-center px-10">
+        <footer class="flex justify-between bg-primary items-center px-10">
             <div>
                 <div>made by Diogo Ferreira</div>
                 <div>
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div>
-                <NuxtLink to="/documentation" class="btn">
+                <NuxtLink to="/documentation">
                     <Icon name="basil:document-outline" />documentation
                 </NuxtLink>
             </div>
@@ -42,7 +42,5 @@
 </script>
 
 <style scoped>
-.router-link-exact-active {
-    @apply btn;
-}
+.router-link-exact-active {}
 </style>
