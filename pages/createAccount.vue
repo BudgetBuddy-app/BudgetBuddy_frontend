@@ -3,11 +3,11 @@
     <h2>Create Account</h2>
     <form @submit.prevent="submitForm">
       <label>Name:</label>
-      <input type="text" v-model="user.name" />
+      <UInput type="text" v-model="user.name" />
       <label>Email:</label>
-      <input type="email" v-model="user.email" />
+      <UInput type="email" v-model="user.email" />
       <label>Password:</label>
-      <input type="password" v-model="user.password" />
+      <UInput type="password" v-model="user.password" />
       <UButton type="submit">Submit</UButton>
     </form>
   </div>

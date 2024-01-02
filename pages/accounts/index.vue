@@ -2,25 +2,24 @@
     <div>
         <h2>Accounts</h2>
 
-        <h4>Create Account</h4>
-        <form @submit.prevent="submitForm">
-            <label>Name:</label>
-            <input type="name" v-model="accountToCreate.name" />
-            <UButton type="submit">Submit</UButton>
-        </form>
+        <UButton label="Create account" @click="isOpen = true" />
+        <CreateEditAccountModal :authenticatedUser="authenticatedUser" :isOpen="isOpen" @update:isOpen="isOpen = $event"
+            @refreshList="(getUserAccounts())" />
+
         <div>showing {{ accountList.length }} accounts:</div>
-        <div v-for="account in accountList" class="border border-red-600">
-            <span>
-                <NuxtLink :to="accountUrl(account)">
-                    <Icon name="material-symbols:info" />
-                </NuxtLink>
-            </span>
-            <span>{{ account }}</span>
-        </div>
+        <UTable :rows="accountList" :columns="columns">
+            <template #actions-data="{ row }">
+                <UDropdown :items="items(row)">
+                    <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
+                </UDropdown>
+            </template>
+        </UTable>
     </div>
 </template>
+ 
 
 <script setup>
+//setups and imports
 import { useRuntimeConfig } from '#app'
 import { useAuthStore } from '~/store/auth'
 
@@ -28,12 +27,40 @@ const runtimeConfig = useRuntimeConfig()
 const authStore = useAuthStore();
 let authenticatedUser = authStore.getAuthenticatedUser()
 
-let accountToCreate = {
-    name: ''
-};
-
 let accountList = ref([]);
+const isOpen = ref(false)
 
+//table variables
+const columns = [
+    {
+        key: 'id',
+        label: 'ID'
+    }, {
+        key: 'name',
+        label: 'Account Name'
+    }, {
+        key: 'actions'
+    }
+]
+
+const items = (row) => [
+    [{
+        label: 'Details',
+        icon: 'heroicons:information-circle-20-solid',
+        click: () => reDirect('Details', row.id)
+    }],
+    [{
+        label: 'Edit',
+        icon: 'i-heroicons-pencil-square-20-solid',
+        click: () => reDirect('Edit', row.id)
+    }, {
+        label: 'Delete',
+        icon: 'i-heroicons-trash-20-solid',
+        click: () => reDirect('Delete', row.id)
+    }]
+]
+
+//functions
 const getUserAccounts = async () => {
     try {
         const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts/user/' + authenticatedUser.id, {
@@ -46,29 +73,22 @@ const getUserAccounts = async () => {
 }
 getUserAccounts();
 
-const submitForm = async () => {
-    try {
-        accountToCreate.user_id = authenticatedUser.id
-        const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts', {
-            method: 'POST',
-            body: JSON.stringify(accountToCreate),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-
-        //TODO make this a popup, not a console log
-        console.log("Success: ", response)
-
-        getUserAccounts();
-
-    } catch (error) {
-        console.error('ERROR:', error)
+const reDirect = async (type, id) => {
+    switch (type) {
+        case 'Details':
+            await navigateTo('/accounts/' + id);
+            break;
+        case 'Edit':
+            console.log("TODO edit")
+            //TODO recycle the create modal to also edit an account
+            break;
+        case 'Delete':
+            console.log("TODO delete")
+            //TODO add a popup to delete
+            break;
+        default:
+            console.error('Invalid type');
     }
-};
-
-const accountUrl = (account) => {
-    return '/accounts/' + account.id;
 }
 
 </script>

@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="login">
-    <input v-model="email" type="text" placeholder="Email" />
-    <input v-model="password" type="password" placeholder="Password" />
+    <UInput v-model="email" type="text" placeholder="Email" />
+    <UInput v-model="password" type="password" placeholder="Password" />
     <UButton type="submit">Login</UButton>
   </form>
 </template>
