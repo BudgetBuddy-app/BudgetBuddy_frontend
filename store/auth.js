@@ -3,7 +3,8 @@ import { useRuntimeConfig } from '#app'
 
 export const useAuthStore = defineStore('authStore', () => {
     const runtimeConfig = useRuntimeConfig()
-    let accessToken = ''
+    let accessToken = {}
+    accessToken.value = ''
     let currentToken = ''
     let currentUser = null
     validateTokenOnStart()
@@ -18,14 +19,15 @@ export const useAuthStore = defineStore('authStore', () => {
                     'access-token': accessToken.value
                 }
             })
-            console.log(response)
             if (!response.Validation) {
                 accessToken.value = ''
             } else {
                 setAuthenticatedUser(response.User)
             }
         } catch (error) {
-            //TODO; show error to user or smthn, Handle login error
+            //TODO; show error to user or smthn, Handle login error?
+            //maybe not, it's the first time they open the page, they ofc don't have a cookie
+            removeToken()
             console.error('Cookie authentication failed:', error)
         }
     }
@@ -36,7 +38,7 @@ export const useAuthStore = defineStore('authStore', () => {
 
     function removeToken() {
         accessToken.value = ''
-        currentUser.value = null
+        currentUser = null
     }
 
     function isAuthenticated() {
