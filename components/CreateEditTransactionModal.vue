@@ -29,6 +29,8 @@
 </template>
 
 <script setup>
+const toast = useToast()
+
 const props = defineProps({
   isOpen: Boolean,
 })
@@ -53,9 +55,8 @@ const submitForm = async () => {
         'Content-Type': 'application/json'
       }
     })
-
-    //TODO make this a popup, not a console log
-    console.log("Success: ", response)
+    
+    toast.add({ title: "Success: " + response })
 
     //TODO guarantee this emit works
     emit('submitForm');
