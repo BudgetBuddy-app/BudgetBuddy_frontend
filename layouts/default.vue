@@ -37,7 +37,7 @@
                 <ul class="flex justify-end items-center right-0 w-2/12">
                     <li class="mr-5">
                         <NuxtLink to="/settings">
-                            <Icon name="ic:baseline-settings" size="30"/>
+                            <Icon name="ic:baseline-settings" size="30" />
                         </NuxtLink>
                     </li>
                     <li>
@@ -50,6 +50,8 @@
         </header>
         <div class="flex-grow">
             <slot />
+            <!--enable notifications-->
+            <UNotifications />
         </div>
         <footer class="flex justify-between bg-primary items-center px-10">
             <div>
@@ -75,16 +77,10 @@
 </template>
  
 <script setup>
- 
- const { apiBasePath } = useRuntimeConfig()
- 
- //call API endpoints
- //const { data: products } = await useFetch(apiBasePath+'/')
- 
- //throw custom error
- /*
- if (!products.value) {
-    throw createError({ statusCode: 404, statusMessage: 'Product Not Found', fatal: true })
- }
- */
- </script>
+//throw custom error
+/*
+if (!products.value) {
+   throw createError({ statusCode: 404, statusMessage: 'Product Not Found', fatal: true })
+}
+*/
+</script>

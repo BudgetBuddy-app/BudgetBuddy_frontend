@@ -25,10 +25,7 @@ export const useAuthStore = defineStore('authStore', () => {
                 setAuthenticatedUser(response.User)
             }
         } catch (error) {
-            //TODO; show error to user or smthn, Handle login error?
-            //maybe not, it's the first time they open the page, they ofc don't have a cookie
             removeToken()
-            console.error('Cookie authentication failed:', error)
         }
     }
 

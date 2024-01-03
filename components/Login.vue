@@ -11,11 +11,12 @@ import { ref } from 'vue'
 import { useAuthStore } from '~/store/auth'
 import { useRuntimeConfig } from '#app'
 
-const email = ref('')
-const password = ref('')
-
 const authStore = useAuthStore()
 const runtimeConfig = useRuntimeConfig()
+const toast = useToast()
+
+const email = ref('')
+const password = ref('')
 
 async function login() {
   try {
@@ -30,18 +31,15 @@ async function login() {
     if (response.Login) {
       authStore.setToken(response.token)
       authStore.setAuthenticatedUser(response.User[0])
-      console.log("Login successful!")
+      toast.add({ title: "Login successful!" })
+
       await navigateTo('/dashboard')
     } else {
-      //TODO; show error or smthn,  Handle login error
-      console.error('Login failed:', response.Message)
-
+      toast.add({ title: 'Login failed:' + response.Message })
     }
 
-
   } catch (error) {
-    //TODO; show error or smthn,  Handle login error
-    console.error('Login failed:', error)
+    toast.add({ title: 'Login failed:', error })
   }
 }
 </script>

@@ -21,6 +21,7 @@
 <script setup>
 import { useRuntimeConfig } from '#app'
 const runtimeConfig = useRuntimeConfig()
+const toast = useToast()
 
 const props = defineProps({
   isOpen: Boolean,
@@ -46,8 +47,7 @@ const submitForm = async () => {
       }
     })
 
-    //TODO make this a popup, not a console log
-    console.log("Success: ", response)
+    toast.add({ title: "Success: " + response })
 
     emit('refreshList');
 

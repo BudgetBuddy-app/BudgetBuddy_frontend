@@ -13,6 +13,8 @@
         </header>
         <div class="flex-grow">
             <slot />
+            <!--enable notifications-->
+            <UNotifications />
         </div>
         <footer class="flex justify-between bg-primary items-center px-10">
             <div>
