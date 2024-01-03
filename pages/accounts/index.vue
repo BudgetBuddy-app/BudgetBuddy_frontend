@@ -3,8 +3,11 @@
         <h2>Accounts</h2>
 
         <UButton label="Create account" @click="isOpen = true" />
+        <UButton @click="getUserAccounts()">
+            <Icon name="ic:baseline-refresh" />
+        </UButton>
         <CreateEditAccountModal :authenticatedUser="authenticatedUser" :isOpen="isOpen" @update:isOpen="isOpen = $event"
-            @refreshList="(getUserAccounts())" />
+            @refreshList="getUserAccounts()" />
 
         <div>showing {{ accountList.length }} accounts:</div>
         <UTable :rows="accountList" :columns="columns">
@@ -83,7 +86,7 @@ const reDirect = async (type, id) => {
             //TODO recycle the create modal to also edit an account
             break;
         case 'Delete':
-            console.log("TODO delete")
+            console.log("delete")
             //TODO add a popup to delete
             break;
         default:

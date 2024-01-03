@@ -29,7 +29,7 @@ async function login() {
 
     if (response.Login) {
       authStore.setToken(response.token)
-      authStore.setAuthenticatedUser(response.User)
+      authStore.setAuthenticatedUser(response.User[0])
       console.log("Login successful!")
       await navigateTo('/dashboard')
     } else {

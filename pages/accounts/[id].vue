@@ -4,6 +4,7 @@
         <h3>Account info: {{ accountInfo }}</h3>
 
         <UButton label="Create transaction" @click="isOpen = true" />
+        <UButton @click="getAccountTransactions()" ><Icon name="ic:baseline-refresh" /></UButton>
         <CreateEditTransactionModal :isOpen="isOpen" @update:isOpen="isOpen = $event" />
 
         <div>showing {{ transactionList.length }} transaction:</div>
@@ -107,15 +108,15 @@ const getAccountTransactions = async () => {
 const reDirect = async (type, id) => {
     switch (type) {
         case 'Details':
-            console.log("TODO details")
+            console.log("details")
             //TODO details page
             break;
         case 'Edit':
-            console.log("TODO edit")
+            console.log("edit")
             //TODO recycle the create modal to also edit an account
             break;
         case 'Delete':
-            console.log("TODO delete")
+            console.log("delete")
             //TODO add a popup to delete
             break;
         default:
