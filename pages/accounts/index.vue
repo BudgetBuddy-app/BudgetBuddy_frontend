@@ -82,7 +82,7 @@ const reDirect = async (type, id) => {
             await navigateTo('/accounts/' + id);
             break;
         case 'Edit':
-            console.log("TODO edit")
+            console.log("edit")
             //TODO recycle the create modal to also edit an account
             break;
         case 'Delete':
