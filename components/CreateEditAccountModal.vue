@@ -2,7 +2,7 @@
   <UModal :modelValue="isOpen" @update:modelValue="val => $emit('update:isOpen', val)">
     <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
       <template #header>
-        <h2 class="h-8">Create Account</h2>
+        <h2 class="h-8">{{ mode }} Account </h2>
       </template>
 
       <form @submit.prevent="submitForm">
@@ -25,7 +25,9 @@ const toast = useToast()
 
 const props = defineProps({
   isOpen: Boolean,
-  authenticatedUser: Object
+  authenticatedUser: Object,
+  mode: String,
+  accountToEdit: Object
 })
 
 const emit = defineEmits(['update:isOpen', 'refreshList'])
@@ -38,21 +40,53 @@ const userId = computed(() => props.authenticatedUser?.id)
 
 const submitForm = async () => {
   try {
-    accountToCreate.user_id = userId.value
-    const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts', {
-      method: 'POST',
-      body: JSON.stringify(accountToCreate),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
 
-    toast.add({ title: "Success: " + response })
+    let responseText = ''
+    if (props.mode == 'Create') {
+      accountToCreate.user_id = userId.value
+      const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts', {
+        method: 'POST',
+        body: JSON.stringify(accountToCreate),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      //TODO this clean doesn't work, but it is merely aesthetical, could delete with no problems
+      cleanAccount();
+      responseText = 'Account created'
+    } else if (props.mode == 'Edit') {
+      const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts/' + props.accountToEdit.id, {
+        method: 'PUT',
+        body: JSON.stringify(accountToCreate),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      responseText = 'Account edited'
+    }
 
+    toast.add({ title: "Success: " + responseText })
     emit('refreshList');
 
   } catch (error) {
-    console.error('ERROR:', error)
+    toast.add({ title: "ERROR: " + error })
   }
 };
+
+const cleanAccount = () => {
+  accountToCreate = {
+    name: '',
+    user_id: null
+  };
+}
+
+watch(() => props.isOpen, (newVal, oldVal) => {
+
+  if (props.mode == 'Edit') {
+    accountToCreate.name = props.accountToEdit.name
+  }
+  if (!newVal && oldVal) {
+    cleanAccount()
+  }
+});
 </script>

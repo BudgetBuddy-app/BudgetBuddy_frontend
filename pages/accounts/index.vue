@@ -2,12 +2,12 @@
     <div>
         <h2>Accounts</h2>
 
-        <UButton label="Create account" @click="isOpen = true" />
+        <UButton label="Create account" @click="isOpen = true; mode = 'Create'" />
         <UButton @click="getUserAccounts()">
             <Icon name="ic:baseline-refresh" />
         </UButton>
-        <CreateEditAccountModal :authenticatedUser="authenticatedUser" :isOpen="isOpen" @update:isOpen="isOpen = $event"
-            @refreshList="getUserAccounts()" />
+        <CreateEditAccountModal :authenticatedUser="authenticatedUser" :isOpen="isOpen" :mode="mode"
+            :accountToEdit="accountToEdit" @update:isOpen="isOpen = $event" @refreshList="getUserAccounts()" />
 
         <div>showing {{ accountList.length }} accounts:</div>
         <UTable :rows="accountList" :columns="columns">
@@ -32,6 +32,8 @@ let authenticatedUser = authStore.getAuthenticatedUser()
 
 let accountList = ref([]);
 const isOpen = ref(false)
+const mode = ref('')
+const accountToEdit = ref({})
 
 //table variables
 const columns = [
@@ -50,16 +52,16 @@ const items = (row) => [
     [{
         label: 'Details',
         icon: 'heroicons:information-circle-20-solid',
-        click: () => reDirect('Details', row.id)
+        click: () => reDirect('Details', row)
     }],
     [{
         label: 'Edit',
         icon: 'i-heroicons-pencil-square-20-solid',
-        click: () => reDirect('Edit', row.id)
+        click: () => reDirect('Edit', row)
     }, {
         label: 'Delete',
         icon: 'i-heroicons-trash-20-solid',
-        click: () => reDirect('Delete', row.id)
+        click: () => reDirect('Delete', row)
     }]
 ]
 
@@ -76,14 +78,15 @@ const getUserAccounts = async () => {
 }
 getUserAccounts();
 
-const reDirect = async (type, id) => {
+const reDirect = async (type, row) => {
     switch (type) {
         case 'Details':
-            await navigateTo('/accounts/' + id);
+            await navigateTo('/accounts/' + row.id);
             break;
         case 'Edit':
-            console.log("edit")
-            //TODO recycle the create modal to also edit an account
+            mode.value = 'Edit'
+            accountToEdit.value = row
+            isOpen.value = true
             break;
         case 'Delete':
             console.log("delete")
