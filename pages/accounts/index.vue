@@ -2,12 +2,14 @@
     <div>
         <h2>Accounts</h2>
 
-        <UButton label="Create account" @click="isOpen = true; mode = 'Create'" />
-        <UButton @click="getUserAccounts()">
-            <Icon name="ic:baseline-refresh" />
-        </UButton>
+        <div class="flex items-center">
+            <UButton label="Create account" @click="isOpen = true; mode = 'Create'" />
+            <UButton @click="getUserAccounts()">
+                <Icon name="ic:baseline-refresh" />
+            </UButton>
+        </div>
         <CreateEditAccountModal :authenticatedUser="authenticatedUser" :isOpen="isOpen" :mode="mode"
-            :accountToEdit="accountToEdit" @update:isOpen="isOpen = $event" @refreshList="getUserAccounts()" />
+            :accountToEdit="accountToEdit" @update:isOpen="isOpen = $event" @refreshList="getUserAccounts()" @closeModal="closeModal()" />
 
         <div>showing {{ accountList.length }} accounts:</div>
         <UTable :rows="accountList" :columns="columns">
@@ -90,11 +92,17 @@ const reDirect = async (type, row) => {
             break;
         case 'Delete':
             console.log("delete")
-            //TODO add a popup to delete
+            mode.value = 'Delete'
+            accountToEdit.value = row
+            isOpen.value = true
             break;
         default:
             console.error('Invalid type');
     }
+}
+
+const closeModal = () => {
+    isOpen.value = false
 }
 
 </script>

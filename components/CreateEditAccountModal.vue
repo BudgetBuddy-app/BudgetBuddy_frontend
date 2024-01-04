@@ -2,17 +2,25 @@
   <UModal :modelValue="isOpen" @update:modelValue="val => $emit('update:isOpen', val)">
     <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
       <template #header>
-        <h2 class="h-8">{{ mode }} Account </h2>
+        <h1 class="h-8">{{ mode }} Account </h1>
       </template>
 
-      <form @submit.prevent="submitForm">
+      <form v-if="mode != 'Delete'" @submit.prevent="submitForm">
         <label>Name:</label>
         <UInput type="name" v-model="accountToCreate.name" />
         <UButton type="submit">Submit</UButton>
       </form>
 
+      <div v-else class="flex flex-col items-center">
+        <div class="pb-4">Are you sure you want to delete the <b>{{ accountToEdit.name }}</b> account?</div>
+        <UButton @click="submitForm" color="red" size="xl">DELETE</UButton>
+      </div>
+
       <template #footer>
-        <div class="h-8">There can be many accounts with the same name.</div>
+        <div class="h-8">
+          <span v-if="mode != 'Delete'">There can be many accounts with the same name.</span>
+          <span v-else><b>WARNING:</b> This change is permanent!</span>
+        </div>
       </template>
     </UCard>
   </UModal>
@@ -30,7 +38,7 @@ const props = defineProps({
   accountToEdit: Object
 })
 
-const emit = defineEmits(['update:isOpen', 'refreshList'])
+const emit = defineEmits(['update:isOpen', 'refreshList', 'closeModal'])
 
 let accountToCreate = {
   name: ''
@@ -51,9 +59,8 @@ const submitForm = async () => {
           'Content-Type': 'application/json'
         }
       })
-      //TODO this clean doesn't work, but it is merely aesthetical, could delete with no problems
-      cleanAccount();
       responseText = 'Account created'
+      emit('closeModal');
     } else if (props.mode == 'Edit') {
       const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts/' + props.accountToEdit.id, {
         method: 'PUT',
@@ -63,6 +70,15 @@ const submitForm = async () => {
         }
       })
       responseText = 'Account edited'
+    } else if (props.mode == 'Delete') {
+      const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts/' + props.accountToEdit.id, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      responseText = 'Account deleted'
+      emit('closeModal');
     }
 
     toast.add({ title: "Success: " + responseText })

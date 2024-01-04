@@ -3,8 +3,12 @@
         <h2>Account id: {{ id }} </h2>
         <h3>Account info: {{ accountInfo }}</h3>
 
-        <UButton label="Create transaction" @click="isOpen = true" />
-        <UButton @click="getAccountTransactions()" ><Icon name="ic:baseline-refresh" /></UButton>
+        <div class="flex items-center">
+            <UButton label="Create transaction" @click="isOpen = true" />
+            <UButton @click="getAccountTransactions()">
+                <Icon name="ic:baseline-refresh" />
+            </UButton>
+        </div>
         <CreateEditTransactionModal :isOpen="isOpen" @update:isOpen="isOpen = $event" />
 
         <div>showing {{ transactionList.length }} transaction:</div>
