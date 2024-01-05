@@ -7,7 +7,7 @@
 
       <form v-if="mode != 'Delete'" @submit.prevent="submitForm">
         <label>Name:</label>
-        <UInput type="name" v-model="accountToCreate.name" />
+        <UInput type="name" v-model="accountForm.name" />
         <UButton type="submit">Submit</UButton>
       </form>
 
@@ -28,33 +28,36 @@
 
 <script setup>
 import { useRuntimeConfig } from '#app'
+import { useAuthStore } from '~/store/auth'
+
 const runtimeConfig = useRuntimeConfig()
 const toast = useToast()
 
 const props = defineProps({
   isOpen: Boolean,
-  authenticatedUser: Object,
   mode: String,
   accountToEdit: Object
 })
 
 const emit = defineEmits(['update:isOpen', 'refreshList', 'closeModal'])
 
-let accountToCreate = {
-  name: ''
-};
+let accountForm = {};
 
-const userId = computed(() => props.authenticatedUser?.id)
+const authStore = useAuthStore();
+let authenticatedUser = authStore.getAuthenticatedUser()
+const userId = computed(() => authenticatedUser.id)
+
+
 
 const submitForm = async () => {
   try {
 
     let responseText = ''
     if (props.mode == 'Create') {
-      accountToCreate.user_id = userId.value
+      accountForm.user_id = userId.value
       const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts', {
         method: 'POST',
-        body: JSON.stringify(accountToCreate),
+        body: JSON.stringify(accountForm),
         headers: {
           'Content-Type': 'application/json'
         }
@@ -64,7 +67,7 @@ const submitForm = async () => {
     } else if (props.mode == 'Edit') {
       const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts/' + props.accountToEdit.id, {
         method: 'PUT',
-        body: JSON.stringify(accountToCreate),
+        body: JSON.stringify(accountForm),
         headers: {
           'Content-Type': 'application/json'
         }
@@ -90,16 +93,17 @@ const submitForm = async () => {
 };
 
 const cleanAccount = () => {
-  accountToCreate = {
+  accountForm = {
     name: '',
     user_id: null
   };
 }
+cleanAccount();
 
 watch(() => props.isOpen, (newVal, oldVal) => {
 
   if (props.mode == 'Edit') {
-    accountToCreate.name = props.accountToEdit.name
+    accountForm.name = props.accountToEdit.name
   }
   if (!newVal && oldVal) {
     cleanAccount()

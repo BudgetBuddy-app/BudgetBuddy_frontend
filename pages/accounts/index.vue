@@ -4,12 +4,12 @@
 
         <div class="flex items-center">
             <UButton label="Create account" @click="isOpen = true; mode = 'Create'" />
-            <UButton @click="getUserAccounts()">
+            <UButton @click="getUserAccounts(); toast.add({ title: 'Refreshing list... ' })">
                 <Icon name="ic:baseline-refresh" />
             </UButton>
         </div>
-        <CreateEditAccountModal :authenticatedUser="authenticatedUser" :isOpen="isOpen" :mode="mode"
-            :accountToEdit="accountToEdit" @update:isOpen="isOpen = $event" @refreshList="getUserAccounts()" @closeModal="closeModal()" />
+        <CRUDAccountModal :isOpen="isOpen" :mode="mode" :accountToEdit="accountToEdit" @update:isOpen="isOpen = $event"
+            @refreshList="getUserAccounts()" @closeModal="closeModal()" />
 
         <div>showing {{ accountList.length }} accounts:</div>
         <UTable :rows="accountList" :columns="columns">
@@ -28,6 +28,7 @@
 import { useRuntimeConfig } from '#app'
 import { useAuthStore } from '~/store/auth'
 
+const toast = useToast()
 const runtimeConfig = useRuntimeConfig()
 const authStore = useAuthStore();
 let authenticatedUser = authStore.getAuthenticatedUser()
@@ -91,7 +92,6 @@ const reDirect = async (type, row) => {
             isOpen.value = true
             break;
         case 'Delete':
-            console.log("delete")
             mode.value = 'Delete'
             accountToEdit.value = row
             isOpen.value = true

@@ -1,15 +1,16 @@
 <template>
     <div>
-        <h2>Account id: {{ id }} </h2>
-        <h3>Account info: {{ accountInfo }}</h3>
+        <h3>Account: {{ accountInfo.name }}</h3>
 
         <div class="flex items-center">
-            <UButton label="Create transaction" @click="isOpen = true" />
-            <UButton @click="getAccountTransactions()">
+            <UButton label="Create transaction" @click="isOpen = true; mode = 'Create'" />
+            <UButton @click="getAccountTransactions(); toast.add({ title: 'Refreshing list... ' })">
                 <Icon name="ic:baseline-refresh" />
             </UButton>
         </div>
-        <CreateEditTransactionModal :isOpen="isOpen" @update:isOpen="isOpen = $event" />
+        <CRUDTransactionModal :isOpen="isOpen" :mode="mode" :transactionToEdit="transactionToEdit"
+            :parentAccount="accountInfo" @update:isOpen="isOpen = $event" @refreshList="getAccountTransactions()"
+            @closeModal="closeModal()" />
 
         <div>showing {{ transactionList.length }} transaction:</div>
         <UTable :rows="transactionList" :columns="columns">
@@ -24,16 +25,17 @@
 
 <script setup>
 //setups and imports
-const { id } = useRoute().params
-
 import { useRuntimeConfig } from '#app'
 
+const { id } = useRoute().params
+const toast = useToast()
 const runtimeConfig = useRuntimeConfig()
 
 const isOpen = ref(false)
-
-let accountInfo = ref([]);
-let transactionList = ref([]);
+const accountInfo = ref({});
+const transactionList = ref([]);
+const mode = ref('')
+const transactionToEdit = ref({})
 
 //table variables
 const columns = [
@@ -45,20 +47,12 @@ const columns = [
         label: 'Amount'
     }
     , {
-        key: 'type',
-        label: 'Type'
-    }
-    , {
         key: 'date',
-        label: 'Date'
+        label: 'Date (yyyy-mm-dd)'
     }
     , {
-        key: 'recipient_id',
-        label: 'Recipient id'
-    }
-    , {
-        key: 'account_id',
-        label: 'Account id'
+        key: 'recipient',
+        label: 'Recipient'
     }
     , {
         key: 'notes',
@@ -73,16 +67,16 @@ const items = (row) => [
     [{
         label: 'Details',
         icon: 'heroicons:information-circle-20-solid',
-        click: () => reDirect('Details', row.id)
+        click: () => reDirect('Details', row)
     }],
     [{
         label: 'Edit',
         icon: 'i-heroicons-pencil-square-20-solid',
-        click: () => reDirect('Edit', row.id)
+        click: () => reDirect('Edit', row)
     }, {
         label: 'Delete',
         icon: 'i-heroicons-trash-20-solid',
-        click: () => reDirect('Delete', row.id)
+        click: () => reDirect('Delete', row)
     }]
 ]
 
@@ -97,37 +91,51 @@ const getAccountInfo = async () => {
         console.error('ERROR:', error)
     }
 }
+getAccountInfo();
 
 const getAccountTransactions = async () => {
     try {
         const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/transactions/account/' + id, {
             method: 'GET',
         })
-        transactionList.value = response;
+
+        //turn all dates into a readable format
+        let auxArray = response;
+        for (let i = 0; i < auxArray.length; i++) {
+            if (auxArray[i].date) {
+                auxArray[i].date = auxArray[i].date.split('T')[0];
+            }
+        }
+
+        transactionList.value = auxArray;
     } catch (error) {
         console.error('ERROR:', error)
     }
 }
+getAccountTransactions();
 
-const reDirect = async (type, id) => {
+const reDirect = async (type, row) => {
     switch (type) {
         case 'Details':
-            console.log("details")
-            //TODO details page
+            await navigateTo('/transactions/' + row.id);
             break;
         case 'Edit':
-            console.log("edit")
-            //TODO recycle the create modal to also edit an account
+            mode.value = 'Edit'
+            transactionToEdit.value = row
+            isOpen.value = true
             break;
         case 'Delete':
-            console.log("delete")
-            //TODO add a popup to delete
+            mode.value = 'Delete'
+            transactionToEdit.value = row
+            isOpen.value = true
             break;
         default:
             console.error('Invalid type');
     }
 }
 
-getAccountInfo();
-getAccountTransactions();
+const closeModal = () => {
+    isOpen.value = false
+}
+
 </script>
