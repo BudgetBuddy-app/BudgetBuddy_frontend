@@ -47,11 +47,8 @@ const authStore = useAuthStore();
 let authenticatedUser = authStore.getAuthenticatedUser()
 const userId = computed(() => authenticatedUser.id)
 
-
-
 const submitForm = async () => {
   try {
-
     let responseText = ''
     if (props.mode == 'Create') {
       accountForm.user_id = userId.value

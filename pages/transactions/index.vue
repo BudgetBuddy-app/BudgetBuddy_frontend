@@ -105,22 +105,12 @@ const getTransactions = async () => {
 getTransactions();
 
 const reDirect = async (type, row) => {
-    switch (type) {
-        case 'Details':
-            await navigateTo('/transactions/' + row.id);
-            break;
-        case 'Edit':
-            mode.value = 'Edit'
-            transactionToEdit.value = row
-            isOpen.value = true
-            break;
-        case 'Delete':
-            mode.value = 'Delete'
-            transactionToEdit.value = row
-            isOpen.value = true
-            break;
-        default:
-            console.error('Invalid type');
+    if (type == 'Details') {
+        await navigateTo('/transactions/' + row.id);
+    } else {
+        mode.value = type
+        accountToEdit.value = row
+        isOpen.value = true
     }
 }
 
