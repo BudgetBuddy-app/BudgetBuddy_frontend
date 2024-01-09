@@ -13,6 +13,8 @@
         <UInput type="date" v-model="transactionForm.date" />
         <label>Recipient:</label>
         <UInput type="text" v-model="transactionForm.recipient" />
+        <label>Category:</label>
+        <UInput type="text" v-model="transactionForm.category" />
         <label>Account:</label>
         <USelectMenu v-model="selectedAccount" :options="accountList" option-attribute="name" />
         <label>Notes:</label>
@@ -59,6 +61,9 @@ let transactionForm = {};
 let accountList = ref([]);
 const selectedAccount = ref(accountList[0])
 
+//TODO add a button on the transaction details page that also opens this modal to edit it
+
+//TODO if no account selected, gives error, but account should be optional, make a specific option that sends null to the DB
 const submitForm = async () => {
   try {
 
@@ -75,7 +80,7 @@ const submitForm = async () => {
       responseText = 'Transaction created'
       emit('closeModal');
     } else if (props.mode == 'Edit') {
-      transactionForm.account_id=selectedAccount.value.id
+      transactionForm.account_id = selectedAccount.value.id
       const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/transactions/' + props.transactionToEdit.id, {
         method: 'PUT',
         body: JSON.stringify(transactionForm),
@@ -120,6 +125,7 @@ const cleanTransaction = () => {
     amount: 0,
     date: new Date().toISOString().split('T')[0], // Set default date to today    
     recipient: '',
+    category: '',
     account_id: '',
     notes: ''
   };

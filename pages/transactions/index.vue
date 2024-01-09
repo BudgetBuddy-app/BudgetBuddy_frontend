@@ -58,8 +58,10 @@ const columns = [
     , {
         key: 'notes',
         label: 'Notes'
-    }
-    , {
+    }, {
+        key: 'category',
+        label: 'Category'
+    }, {
         key: 'actions'
     }
 ]
@@ -109,7 +111,7 @@ const reDirect = async (type, row) => {
         await navigateTo('/transactions/' + row.id);
     } else {
         mode.value = type
-        accountToEdit.value = row
+        transactionToEdit.value = row
         isOpen.value = true
     }
 }

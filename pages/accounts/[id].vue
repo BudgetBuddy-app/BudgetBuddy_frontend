@@ -57,8 +57,10 @@ const columns = [
     , {
         key: 'notes',
         label: 'Notes'
-    }
-    , {
+    }, {
+        key: 'category',
+        label: 'Category'
+    }, {
         key: 'actions'
     }
 ]
