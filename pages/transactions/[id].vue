@@ -4,6 +4,7 @@
         <div>Date: {{ transaction.date }}</div>
         <div>Recipient: {{ transaction.recipient }}</div>
         <div>Notes: {{ transaction.notes }}</div>
+        <div>Category: {{ transaction.category_name }}</div>
     </div>
 </template>
 

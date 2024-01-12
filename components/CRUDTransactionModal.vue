@@ -14,6 +14,9 @@
         <label>Recipient:</label>
         <UInput type="text" v-model="transactionForm.recipient" />
         <label>Category:</label>
+        <div>
+          current categories: <UBadge v-for="category in categoryList" class="mr-1">{{ category.name }}</UBadge>
+        </div>
         <UInput type="text" v-model="transactionForm.category" />
         <label>Account:</label>
         <USelectMenu v-model="selectedAccount" :options="accountList" option-attribute="name" />
@@ -27,10 +30,11 @@
       </div>
 
       <template #footer>
-        <div class="h-8 mb-3">
+        <div class="h-8 mb-10">
           <span v-if="mode != 'Delete'">
             For withdrawals, submit a <b>negative</b> number. <br />
-            In case the recipient does not exist, it will be created.
+            In case the recipient does not exist, it will be created. <br />
+            In case the category does not exist, it will be created.
           </span>
           <span v-else><b>WARNING:</b> This change is permanent!</span>
         </div>
@@ -59,6 +63,7 @@ const emit = defineEmits(['update:isOpen', 'refreshList', 'closeModal'])
 
 let transactionForm = {};
 let accountList = ref([]);
+let categoryList = ref([]);
 const selectedAccount = ref(accountList[0])
 
 //TODO add a button on the transaction details page that also opens this modal to edit it
@@ -120,6 +125,18 @@ const getUserAccounts = async () => {
 }
 getUserAccounts();
 
+const getCategories = async () => {
+  try {
+    const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/categories/user/' + authenticatedUser.id, {
+      method: 'GET',
+    })
+    categoryList.value = response;
+  } catch (error) {
+    console.error('ERROR:', error)
+  }
+}
+getCategories();
+
 const cleanTransaction = () => {
   transactionForm = {
     amount: 0,
@@ -133,6 +150,8 @@ const cleanTransaction = () => {
 cleanTransaction();
 
 watch(() => props.isOpen, (newVal, oldVal) => {
+  getCategories();
+  getUserAccounts();
 
   if (props.mode == 'Edit') {
     transactionForm = props.transactionToEdit
