@@ -8,7 +8,7 @@
 
       <form v-if="mode != 'Delete'" @submit.prevent="submitForm">
         <label>Amount:</label>
-        <UInput type="number" v-model="transactionForm.amount" />
+        <UInput type="decimal" v-model="transactionForm.amount" />
         <label>Date (mm/dd/yyyy):</label>
         <UInput type="date" v-model="transactionForm.date" />
         <label>Recipient:</label>

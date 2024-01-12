@@ -62,6 +62,9 @@ const columns = [
         key: 'category_name',
         label: 'Category'
     }, {
+        key: 'account_name',
+        label: 'Account'
+    }, {
         key: 'actions'
     }
 ]
