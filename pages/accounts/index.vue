@@ -47,6 +47,9 @@ const columns = [
         key: 'name',
         label: 'Account Name'
     }, {
+        key: 'total_amount',
+        label: 'Total amount'
+    }, {
         key: 'actions'
     }
 ]

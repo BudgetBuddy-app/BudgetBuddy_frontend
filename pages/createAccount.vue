@@ -20,6 +20,8 @@ definePageMeta({
   layout: 'minimal'
 })
 
+const toast = useToast()
+
 const runtimeConfig = useRuntimeConfig()
 
 let user = {
@@ -42,6 +44,7 @@ const submitForm = async () => {
     await navigateTo('/dashboard')
 
   } catch (error) {
+    toast.add({ title: "ERROR: there was an error creating the account..." })
     console.error('ERROR:', error)
   }
 };

@@ -104,6 +104,7 @@ const getTransactions = async () => {
 
         transactionList.value = auxArray;
     } catch (error) {
+        toast.add({ title: "ERROR: there was an error fetching the transactions..." })
         console.error('ERROR:', error)
     }
 }

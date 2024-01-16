@@ -90,6 +90,7 @@ const getAccountInfo = async () => {
         })
         accountInfo.value = response;
     } catch (error) {
+        toast.add({ title: "ERROR: there was an error fetching the account information..." })
         console.error('ERROR:', error)
     }
 }
@@ -111,6 +112,7 @@ const getAccountTransactions = async () => {
 
         transactionList.value = auxArray;
     } catch (error) {
+        toast.add({ title: "ERROR: there was an error fetching the account's transactions..." })
         console.error('ERROR:', error)
     }
 }

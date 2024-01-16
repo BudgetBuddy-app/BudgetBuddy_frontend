@@ -120,6 +120,7 @@ const getUserAccounts = async () => {
     })
     accountList.value = response;
   } catch (error) {
+    toast.add({ title: "ERROR: there was an error fetching the user accounts..." })
     console.error('ERROR:', error)
   }
 }
@@ -132,6 +133,7 @@ const getCategories = async () => {
     })
     categoryList.value = response;
   } catch (error) {
+    toast.add({ title: "ERROR: there was an error fetching the transaction categories..." })
     console.error('ERROR:', error)
   }
 }
