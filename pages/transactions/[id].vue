@@ -13,7 +13,6 @@ import { useRuntimeConfig } from '#app'
 
 const runtimeConfig = useRuntimeConfig()
 const { id } = useRoute().params
-const toast = useToast()
 
 const transaction = ref({})
 
@@ -28,7 +27,6 @@ const getTransactions = async () => {
 
         transaction.value = response;
     } catch (error) {
-        toast.add({ title: "ERROR: there was an error fetching the transactions..." })
         console.error('ERROR:', error)
     }
 }

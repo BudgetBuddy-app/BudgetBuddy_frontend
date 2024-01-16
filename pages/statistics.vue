@@ -30,7 +30,6 @@ import { useAuthStore } from '~/store/auth'
 const runtimeConfig = useRuntimeConfig()
 const authStore = useAuthStore();
 let authenticatedUser = authStore.getAuthenticatedUser()
-const toast = useToast()
 
 let accountList = ref([]);
 let netWorth = ref();
@@ -77,7 +76,6 @@ const getUserAccounts = async () => {
             columns2.value.push(accountForTable)
         }
     } catch (error) {
-        toast.add({ title: "ERROR: there was an error fetching the user accounts..." })
         console.error('ERROR:', error)
     }
 }
@@ -92,7 +90,6 @@ const getStatistics = async () => {
         transformStatistics(response)
 
     } catch (error) {
-        toast.add({ title: "ERROR: there was an error fetching the statistics..." })
         console.error('ERROR:', error)
     }
 }
