@@ -11,15 +11,21 @@
         <CRUDTransactionModal :isOpen="isOpen" :mode="mode" :transactionToEdit="transactionToEdit"
             :parentAccount="accountInfo" @update:isOpen="isOpen = $event" @refreshList="getAccountTransactions()"
             @closeModal="closeModal()" />
-
-        <div>showing {{ transactionList.length }} transaction:</div>
-        <UTable :rows="transactionList" :columns="columns">
-            <template #actions-data="{ row }">
-                <UDropdown :items="items(row)">
-                    <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
-                </UDropdown>
-            </template>
-        </UTable>
+        <div>
+            <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
+                <UInput v-model="q" placeholder="Filter transactions..." />
+            </div>
+            <UTable :rows="rows" :columns="columns">
+                <template #actions-data="{ row }">
+                    <UDropdown :items="items(row)">
+                        <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
+                    </UDropdown>
+                </template>
+            </UTable>
+            <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
+                <UPagination v-model="page" :page-count="pageCount" :total="filteredRows.length" />
+            </div>
+        </div>
     </div>
 </template>
 
@@ -36,6 +42,10 @@ const accountInfo = ref({});
 const transactionList = ref([]);
 const mode = ref('')
 const transactionToEdit = ref({})
+
+const q = ref('');
+const page = ref(1);
+const pageCount = 10;
 
 //table variables
 const columns = [
@@ -89,6 +99,25 @@ const items = (row) => [
 ]
 
 //functions
+const filteredRows = computed(() => {
+    if (!q.value) {
+        return transactionList.value;
+    }
+
+    return transactionList.value.filter((transaction) => {
+        return Object.values(transaction).some((value) => {
+            if (typeof value === 'string') {
+                value = value.trim();
+            }
+            return String(value).toLowerCase().includes(q.value.toLowerCase());
+        });
+    });
+});
+
+const rows = computed(() => {
+    return filteredRows.value.slice((page.value - 1) * pageCount, (page.value) * pageCount);
+});
+
 const getAccountInfo = async () => {
     try {
         const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts/' + id, {

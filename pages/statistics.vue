@@ -4,8 +4,24 @@
         <div class="flex">
             <div class="w-full lg:w-1/2 border">
                 <div>Total spent per month (all accounts)</div>
-                <UTable :rows="transactionSumPerMonth" :columns="columns1">
-                </UTable>
+
+                <div>
+                    <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
+                        <UInput v-model="q1" placeholder="Filter transactions..." />
+                    </div>
+                    <UTable :rows="rows1" :columns="columns1">
+                        <template #actions-data="{ row }">
+                            <UDropdown :items="items(row)">
+                                <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
+                            </UDropdown>
+                        </template>
+                    </UTable>
+                    <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
+                        <UPagination v-model="page1" :page-count="pageCount1" :total="filteredRows1.length" />
+                    </div>
+                </div>
+
+
             </div>
             <div class="w-full lg:w-1/2">
                 <div>Total net worth (sum of all accounts): {{ netWorth }} </div>
@@ -17,8 +33,22 @@
         </div>
         <div>
             <div>Total spent per month per account</div>
-            <UTable :rows="transactionSumPerAccountPerMonth" :columns="columns2">
-            </UTable>
+
+            <div>
+                <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
+                    <UInput v-model="q2" placeholder="Filter transactions..." />
+                </div>
+                <UTable :rows="rows2" :columns="columns2">
+                    <template #actions-data="{ row }">
+                        <UDropdown :items="items(row)">
+                            <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
+                        </UDropdown>
+                    </template>
+                </UTable>
+                <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
+                    <UPagination v-model="page2" :page-count="pageCount2" :total="filteredRows2.length" />
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -35,6 +65,13 @@ let accountList = ref([]);
 let netWorth = ref();
 let transactionSumPerMonth = ref([]);
 let transactionSumPerAccountPerMonth = ref([])
+
+const q1 = ref('');
+const page1 = ref(1);
+const pageCount1 = 5;
+const q2 = ref('');
+const page2 = ref(1);
+const pageCount2 = 5;
 
 //TODO sometimes in the small top table, the decimals are not two but like 10, 	-463.96000000000004, and I'm not sure why
 //I already have a function to solve this but it's not working
@@ -57,6 +94,44 @@ const columns1 = [
 const columns2 = ref([])
 
 //functions
+const filteredRows1 = computed(() => {
+    if (!q1.value) {
+        return transactionSumPerMonth.value;
+    }
+
+    return transactionSumPerMonth.value.filter((transaction) => {
+        return Object.values(transaction).some((value) => {
+            if (typeof value === 'string') {
+                value = value.trim();
+            }
+            return String(value).toLowerCase().includes(q1.value.toLowerCase());
+        });
+    });
+});
+
+const rows1 = computed(() => {
+    return filteredRows1.value.slice((page1.value - 1) * pageCount1, (page1.value) * pageCount1);
+});
+
+const filteredRows2 = computed(() => {
+    if (!q2.value) {
+        return transactionSumPerAccountPerMonth.value;
+    }
+
+    return transactionSumPerAccountPerMonth.value.filter((transaction) => {
+        return Object.values(transaction).some((value) => {
+            if (typeof value === 'string') {
+                value = value.trim();
+            }
+            return String(value).toLowerCase().includes(q2.value.toLowerCase());
+        });
+    });
+});
+
+const rows2 = computed(() => {
+    return filteredRows2.value.slice((page2.value - 1) * pageCount2, (page2.value) * pageCount2);
+});
+
 const getUserAccounts = async () => {
     try {
         const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts/user/' + authenticatedUser.id, {
