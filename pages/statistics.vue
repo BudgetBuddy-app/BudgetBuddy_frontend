@@ -37,16 +37,20 @@ let transactionSumPerMonth = ref([]);
 let transactionSumPerAccountPerMonth = ref([])
 
 //TODO sometimes in the small top table, the decimals are not two but like 10, 	-463.96000000000004, and I'm not sure why
-    //I already have a function to solve this but it's not working
+//I already have a function to solve this but it's not working
 
 //table variables
 const columns1 = [
     {
         key: 'date',
-        label: 'month'
+        label: 'month',
+        sortable: 'true',
+        sortable: 'true'
     }, {
         key: 'amount',
-        label: 'amount'
+        label: 'amount',
+        sortable: 'true',
+        sortable: 'true'
     }
 ]
 
@@ -63,7 +67,8 @@ const getUserAccounts = async () => {
 
         let accountForTable = {
             key: 'date',
-            label: 'month'
+            label: 'month',
+            sortable: 'true'
         }
 
         columns2.value.push(accountForTable)
@@ -74,7 +79,8 @@ const getUserAccounts = async () => {
             //generate columns for the account list
             let accountForTable = {
                 key: account.name,
-                label: account.name
+                label: account.name,
+                sortable: 'true'
             }
             columns2.value.push(accountForTable)
         }

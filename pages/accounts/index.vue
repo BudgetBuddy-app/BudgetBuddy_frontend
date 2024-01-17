@@ -42,13 +42,16 @@ const accountToEdit = ref({})
 const columns = [
     {
         key: 'id',
-        label: 'ID'
+        label: 'ID',
+        sortable: 'true'
     }, {
         key: 'name',
-        label: 'Account Name'
+        label: 'Account Name',
+        sortable: 'true'
     }, {
         key: 'total_amount',
-        label: 'Total amount'
+        label: 'Total amount',
+        sortable: 'true'
     }, {
         key: 'actions'
     }

@@ -41,25 +41,31 @@ const transactionToEdit = ref({})
 const columns = [
     {
         key: 'id',
-        label: 'ID'
+        label: 'ID',
+        sortable: 'true'
     }, {
         key: 'amount',
-        label: 'Amount'
+        label: 'Amount',
+        sortable: 'true'
     }
     , {
         key: 'date',
-        label: 'Date (yyyy-mm-dd)'
+        label: 'Date (yyyy-mm-dd)',
+        sortable: 'true'
     }
     , {
         key: 'recipient',
-        label: 'Recipient'
+        label: 'Recipient',
+        sortable: 'true'
     }
     , {
         key: 'notes',
-        label: 'Notes'
+        label: 'Notes',
+        sortable: 'true'
     }, {
         key: 'category_name',
-        label: 'Category'
+        label: 'Category',
+        sortable: 'true'
     }, {
         key: 'actions'
     }
