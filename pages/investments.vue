@@ -169,9 +169,6 @@ const closeModal = () => {
 const refreshAPI = async () => {
 
     for (let i = 0; i < investmentList.value.length; i++) {
-
-        console.log(investmentList.value[i])
-
         const url = 'https://yh-finance.p.rapidapi.com/stock/v2/get-summary?symbol=' + investmentList.value[i].symbol;
         const options = {
             method: 'GET',
