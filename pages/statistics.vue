@@ -7,7 +7,7 @@
 
                 <div>
                     <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
-                        <UInput v-model="q1" placeholder="Filter transactions..." />
+                        <UInput v-model="q1" placeholder="Filter months..." />
                     </div>
                     <UTable :rows="rows1" :columns="columns1">
                         <template #actions-data="{ row }">
@@ -36,7 +36,7 @@
 
             <div>
                 <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
-                    <UInput v-model="q2" placeholder="Filter transactions..." />
+                    <UInput v-model="q2" placeholder="Filter accounts..." />
                 </div>
                 <UTable :rows="rows2" :columns="columns2">
                     <template #actions-data="{ row }">
@@ -93,7 +93,7 @@ const columns1 = [
 
 const columns2 = ref([])
 
-//functions
+//table functions
 const filteredRows1 = computed(() => {
     if (!q1.value) {
         return transactionSumPerMonth.value;
@@ -132,6 +132,7 @@ const rows2 = computed(() => {
     return filteredRows2.value.slice((page2.value - 1) * pageCount2, (page2.value) * pageCount2);
 });
 
+//other functions
 const getUserAccounts = async () => {
     try {
         const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts/user/' + authenticatedUser.id, {

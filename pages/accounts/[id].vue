@@ -98,7 +98,7 @@ const items = (row) => [
     }]
 ]
 
-//functions
+//table functions
 const filteredRows = computed(() => {
     if (!q.value) {
         return transactionList.value;
@@ -118,6 +118,27 @@ const rows = computed(() => {
     return filteredRows.value.slice((page.value - 1) * pageCount, (page.value) * pageCount);
 });
 
+const reDirect = async (type, row) => {
+    switch (type) {
+        case 'Details':
+            await navigateTo('/transactions/' + row.id);
+            break;
+        case 'Edit':
+            mode.value = 'Edit'
+            transactionToEdit.value = row
+            isOpen.value = true
+            break;
+        case 'Delete':
+            mode.value = 'Delete'
+            transactionToEdit.value = row
+            isOpen.value = true
+            break;
+        default:
+            console.error('Invalid type');
+    }
+}
+
+//other functions
 const getAccountInfo = async () => {
     try {
         const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts/' + id, {
@@ -150,26 +171,6 @@ const getAccountTransactions = async () => {
     }
 }
 getAccountTransactions();
-
-const reDirect = async (type, row) => {
-    switch (type) {
-        case 'Details':
-            await navigateTo('/transactions/' + row.id);
-            break;
-        case 'Edit':
-            mode.value = 'Edit'
-            transactionToEdit.value = row
-            isOpen.value = true
-            break;
-        case 'Delete':
-            mode.value = 'Delete'
-            transactionToEdit.value = row
-            isOpen.value = true
-            break;
-        default:
-            console.error('Invalid type');
-    }
-}
 
 const closeModal = () => {
     isOpen.value = false

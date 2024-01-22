@@ -24,7 +24,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      BACKEND_API_BASE_PATH: process.env.BACKEND_API_BASE_PATH || "http://localhost:3001"
+      BACKEND_API_BASE_PATH: process.env.BACKEND_API_BASE_PATH || "http://localhost:3000",
+      YAHOO_FINANCE_API_KEY: process.env.YAHOO_FINANCE_API_KEY || ''
     }
   }
 })

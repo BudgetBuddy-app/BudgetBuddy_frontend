@@ -15,7 +15,7 @@
 
         <div>
             <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
-                <UInput v-model="q" placeholder="Filter transactions..." />
+                <UInput v-model="q" placeholder="Filter accounts..." />
             </div>
             <UTable :rows="rows" :columns="columns">
                 <template #actions-data="{ row }">
@@ -86,7 +86,7 @@ const items = (row) => [
     }]
 ]
 
-//functions
+//table functions
 const filteredRows = computed(() => {
     if (!q.value) {
         return accountList.value;
@@ -106,6 +106,17 @@ const rows = computed(() => {
     return filteredRows.value.slice((page.value - 1) * pageCount, (page.value) * pageCount);
 });
 
+const reDirect = async (type, row) => {
+    if (type == 'Details') {
+        await navigateTo('/accounts/' + row.id);
+    } else {
+        mode.value = type
+        accountToEdit.value = row
+        isOpen.value = true
+    }
+}
+
+//other functions
 const getUserAccounts = async () => {
     try {
         const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts/user/' + authenticatedUser.id, {
@@ -117,16 +128,6 @@ const getUserAccounts = async () => {
     }
 }
 getUserAccounts();
-
-const reDirect = async (type, row) => {
-    if (type == 'Details') {
-        await navigateTo('/accounts/' + row.id);
-    } else {
-        mode.value = type
-        accountToEdit.value = row
-        isOpen.value = true
-    }
-}
 
 const closeModal = () => {
     isOpen.value = false

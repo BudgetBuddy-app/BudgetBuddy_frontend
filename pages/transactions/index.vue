@@ -104,7 +104,7 @@ const items = (row) => [
     }]
 ]
 
-//functions
+//table functions
 const filteredRows = computed(() => {
     if (!q.value) {
         return transactionList.value;
@@ -124,6 +124,17 @@ const rows = computed(() => {
     return filteredRows.value.slice((page.value - 1) * pageCount, (page.value) * pageCount);
 });
 
+const reDirect = async (type, row) => {
+    if (type == 'Details') {
+        await navigateTo('/transactions/' + row.id);
+    } else {
+        mode.value = type
+        transactionToEdit.value = row
+        isOpen.value = true
+    }
+}
+
+//other functions
 const getTransactions = async () => {
     try {
         const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/transactions/user/' + authenticatedUser.id, {
@@ -144,16 +155,6 @@ const getTransactions = async () => {
     }
 }
 getTransactions();
-
-const reDirect = async (type, row) => {
-    if (type == 'Details') {
-        await navigateTo('/transactions/' + row.id);
-    } else {
-        mode.value = type
-        transactionToEdit.value = row
-        isOpen.value = true
-    }
-}
 
 const closeModal = () => {
     isOpen.value = false
