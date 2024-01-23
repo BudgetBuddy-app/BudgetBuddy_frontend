@@ -45,7 +45,6 @@ const reDirect = async (type) => {
     isOpen.value = true
 }
 
-//TODO add this admin endpoints to the documentation, also talk about the one to delete every table that is not here
 const handleDB = async (type) => {
     let endpoint = runtimeConfig.public.BACKEND_API_BASE_PATH
     let response = null

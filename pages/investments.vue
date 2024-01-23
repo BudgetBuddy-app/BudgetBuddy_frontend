@@ -54,8 +54,7 @@ const pageCount = 10;
 
 const investmentList = ref([])
 
-//TODO add warning saying tht the refreshes per month are limited,
-//TODO add "last time refreshed"
+//TODO add warning saying tht the refreshes per month are limited
 
 //table variables 
 const columns = [
