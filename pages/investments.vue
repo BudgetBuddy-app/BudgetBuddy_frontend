@@ -1,6 +1,11 @@
 <template>
     <div>
         <h2>Investments</h2>
+        <div>The price of the stock might be inaccurate, innacuracies upt to 0.1 have been noted, normally due to rounding
+            errors.</div>
+        <div>
+            Note that <b>refreshes per month are limited to 500</b>, after that, you'll have to wait another month, or pay.
+        </div>
 
         <div class="flex items-center">
             <UButton label="Add holding" @click="isOpen = true; mode = 'Create'" />
@@ -30,6 +35,8 @@
                 <UPagination v-model="page" :page-count="pageCount" :total="filteredRows.length" />
             </div>
         </div>
+
+        <InvestmentStatistics :investmentList="investmentList" :calculateStatistics="calculateStatistics" />
     </div>
 </template>
 
@@ -53,8 +60,7 @@ const page = ref(1);
 const pageCount = 10;
 
 const investmentList = ref([])
-
-//TODO add warning saying tht the refreshes per month are limited
+const calculateStatistics = ref(false)
 
 //table variables 
 const columns = [
@@ -219,32 +225,16 @@ const getInvestments = async () => {
 
         for (let i = 0; i < auxArray.length; i++) {
             if (auxArray[i].last_refreshed) {
-                auxArray[i].last_refreshed = auxArray[i].last_refreshed.split('T')[0] + " | " + auxArray[i].last_refreshed.split('T')[1].slice(0, - 1);
+                auxArray[i].last_refreshed = auxArray[i].last_refreshed.split('T')[0]
             }
         }
 
         investmentList.value = auxArray;
-
-        calculateStatisicstOnInvestments()
+        calculateStatistics.value = !calculateStatistics.value;
     } catch (error) {
+        toast.add({ title: 'Error fetching investments...' })
         console.error('ERROR:', error)
     }
 }
 getInvestments()
-
-const calculateStatisicstOnInvestments = () => {
-    console.log("calculating...")
-
-    //TODO calculate al this useful info and display it
-    //maybe display this in dasboard or statistics instead?
-    //make a component with all this info and put it everywhere, maybe do the same with spenditure per account
-    /*
-        let pricePaid = ownedShares * averagePurchasePrice
-        let currentPrice = ownedShares * stock.price
-        let markup = ((currentPrice / pricePaid) * 100) - 100
-        */
-}
-
-//TODO add comment saying that the price of the stock might be inaccurate,
-//innacuracies upt to 0.01 have been noted, normally due to rounding errors
 </script>

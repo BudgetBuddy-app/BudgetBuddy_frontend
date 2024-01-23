@@ -50,10 +50,10 @@
             for example, a file could look like this:
             <div class="bg-blue-500">
                 Recipient,amount,date,category,notes,account
-                Coffe Shop,-1.65,2023-12-01,socializing,coffee,VISA
-                Lidl,-3.66,2023-12-02,groceries,,VISA
-                ABC,-1.33,2023-12-02,,chocolate cake,cash
-                Lidl,-9.91,2023-12-03,groceries,,revolut
+                <br />Coffe Shop,-1.65,2023-12-01,socializing,coffee,VISA
+                <br />Lidl,-3.66,2023-12-02,groceries,,VISA
+                <br />ABC,-1.33,2023-12-02,,chocolate cake,cash
+                <br />Lidl,-9.91,2023-12-03,groceries,,revolut
             </div>
 
             In the current implementation, categories/accounts will be created when they are not found in the database, in
@@ -75,9 +75,9 @@
             For this you need to refresh the API with the respective button, do notice that yuo will need to create an
             account and get your own API key in this site, then add it to the .env file:
             https://rapidapi.com/apidojo/api/yh-finance/
-            Also note that<b>refreshes per month are limited to 500</b>, after that, you'll have to wait another month, or
+            Also note that <b>refreshes per month are limited to 500</b>, after that, you'll have to wait another month, or
             pay.
-            The obtained price of the stock might be inaccurate, innacuracies up to 0.01 have been noted, normally due to
+            The obtained price of the stock might be inaccurate, innacuracies up to 0.1 have been noted, normally due to
             rounding errors.
         </div>
 
