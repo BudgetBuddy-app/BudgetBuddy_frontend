@@ -2,16 +2,16 @@
   <UModal :modelValue="isOpen" @update:modelValue="val => $emit('update:isOpen', val)">
     <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
       <template #header>
-        <h1 class="h-8">{{ mode }} Account </h1>
+        <h1 class="h-8">{{ mode }} Investment </h1>
       </template>
 
       <form v-if="mode !== 'Delete'" @submit.prevent="submitForm">
         <label>Symbol:</label>
         <UInput type="text" v-model="investmentForm.symbol" />
         <label>Owned shares:</label>
-        <UInput type="number" v-model="investmentForm.owned_shares" />
+        <UInput type="decimal" v-model="investmentForm.owned_shares" />
         <label>Average purchase price:</label>
-        <UInput type="number" v-model="investmentForm.average_purchase_price" />
+        <UInput type="decimal" v-model="investmentForm.average_purchase_price" />
         <UButton type="submit">Submit</UButton>
       </form>
       <div v-else class="flex flex-col items-center">
@@ -72,7 +72,7 @@ const submitForm = async () => {
           'Content-Type': 'application/json'
         }
       })
-      responseText = 'Account edited'
+      responseText = 'Investment edited'
     } else if (props.mode == 'Delete') {
       const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/investments/' + props.investmentToCRUD.id, {
         method: 'DELETE',
@@ -81,7 +81,7 @@ const submitForm = async () => {
         }
       })
 
-      responseText = 'Account deleted'
+      responseText = 'Investment deleted'
       emit('closeModal');
       emit('refreshList')
     }
@@ -109,7 +109,7 @@ watch(() => props.isOpen, (newVal, oldVal) => {
   if (props.mode == 'Edit') {
     investmentForm = props.investmentToCRUD
     if (investmentForm.last_refreshed) {
-      investmentForm.last_refreshed = transactionForm.last_refreshed.split('T')[0]
+      investmentForm.last_refreshed = investmentForm.last_refreshed.split('T')[0]
     }
   }
 

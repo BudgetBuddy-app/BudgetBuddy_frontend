@@ -111,11 +111,6 @@ const columns = [
 
 const items = (row) => [
     [{
-        label: 'Details',
-        icon: 'heroicons:information-circle-20-solid',
-        click: () => reDirect('Details', row)
-    }],
-    [{
         label: 'Edit',
         icon: 'i-heroicons-pencil-square-20-solid',
         click: () => reDirect('Edit', row)
