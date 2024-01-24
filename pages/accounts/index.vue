@@ -11,23 +11,7 @@
         <CRUDAccountModal :isOpen="isOpen" :mode="mode" :accountToEdit="accountToEdit" @update:isOpen="isOpen = $event"
             @refreshList="getUserAccounts()" @closeModal="closeModal()" />
 
-        <div>showing {{ accountList.length }} accounts:</div>
-
-        <div>
-            <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
-                <UInput v-model="q" placeholder="Filter accounts..." />
-            </div>
-            <UTable :rows="rows" :columns="columns">
-                <template #actions-data="{ row }">
-                    <UDropdown :items="items(row)">
-                        <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
-                    </UDropdown>
-                </template>
-            </UTable>
-            <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
-                <UPagination v-model="page" :page-count="pageCount" :total="filteredRows.length" />
-            </div>
-        </div>
+        <CustomTable :columns="columns" :items="items" :itemList="accountList" />
     </div>
 </template>
 
@@ -45,10 +29,6 @@ let accountList = ref([]);
 const isOpen = ref(false)
 const mode = ref('')
 const accountToEdit = ref({})
-
-const q = ref('');
-const page = ref(1);
-const pageCount = 10;
 
 //table variables
 const columns = [
@@ -86,26 +66,7 @@ const items = (row) => [
     }]
 ]
 
-//table functions
-const filteredRows = computed(() => {
-    if (!q.value) {
-        return accountList.value;
-    }
-
-    return accountList.value.filter((account) => {
-        return Object.values(account).some((value) => {
-            if (typeof value === 'string') {
-                value = value.trim();
-            }
-            return String(value).toLowerCase().includes(q.value.toLowerCase());
-        });
-    });
-});
-
-const rows = computed(() => {
-    return filteredRows.value.slice((page.value - 1) * pageCount, (page.value) * pageCount);
-});
-
+//functions
 const reDirect = async (type, row) => {
     if (type == 'Details') {
         await navigateTo('/accounts/' + row.id);
@@ -116,7 +77,6 @@ const reDirect = async (type, row) => {
     }
 }
 
-//other functions
 const getUserAccounts = async () => {
     try {
         const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts/user/' + authenticatedUser.id, {

@@ -4,19 +4,8 @@
         <div>Total invested: {{ statisticSums.totalInvested }}</div>
         <div>Total gained: {{ statisticSums.totalGain }}</div>
         <div>Total portfolio worth: {{ statisticSums.totalPortfolio }}</div>
-
     </div>
-    <div>
-        <div>
-            <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
-                <UInput v-model="q" placeholder="Filter investments..." />
-            </div>
-            <UTable :rows="rows" :columns="columns" />
-            <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
-                <UPagination v-model="page" :page-count="pageCount" :total="filteredRows.length" />
-            </div>
-        </div>
-    </div>
+    <CustomTable :columns="columns" :itemList="investmentStatisitcs" />
 </template>
    
 <script setup>
@@ -24,10 +13,6 @@ const props = defineProps({
     investmentList: Array,
     calculateStatistics: Boolean
 })
-
-const q = ref('');
-const page = ref(1);
-const pageCount = 10;
 
 const investmentStatisitcs = ref([])
 const statisticSums = ref({})
@@ -57,27 +42,7 @@ const columns = [
     }
 ]
 
-//table functions
-const filteredRows = computed(() => {
-    if (!q.value) {
-        return investmentStatisitcs.value;
-    }
-
-    return investmentStatisitcs.value.filter((transaction) => {
-        return Object.values(transaction).some((value) => {
-            if (typeof value === 'string') {
-                value = value.trim();
-            }
-            return String(value).toLowerCase().includes(q.value.toLowerCase());
-        });
-    });
-});
-
-const rows = computed(() => {
-    return filteredRows.value.slice((page.value - 1) * pageCount, (page.value) * pageCount);
-});
-
-//other functions
+//functions
 const calculateStatisicstOnInvestments = () => {
 
     statisticSums.value.totalInvested = 0
