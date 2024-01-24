@@ -6,6 +6,11 @@
         <div>
             Note that <b>refreshes per month are limited to 500</b>, after that, you'll have to wait another month, or pay.
         </div>
+        <div>
+            Check your current API limit
+            <a class="underline" href="https://rapidapi.com/developer/billing/subscriptions-and-usage">here
+            </a>
+        </div>
 
         <div class="flex items-center">
             <UButton label="Add holding" @click="isOpen = true; mode = 'Create'" />

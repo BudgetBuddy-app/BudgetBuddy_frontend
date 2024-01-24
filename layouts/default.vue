@@ -10,7 +10,7 @@
                     </li>
                     <li>
                         <NuxtLink to="/transactions">
-                            <Icon name="grommet-icons:transaction" /> <span class="hidden lg:inline">ransactions</span>
+                            <Icon name="grommet-icons:transaction" /> <span class="hidden lg:inline">transactions</span>
                         </NuxtLink>
                     </li>
                     <li>
