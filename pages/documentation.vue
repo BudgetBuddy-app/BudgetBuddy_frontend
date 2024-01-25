@@ -27,6 +27,11 @@
             amount is positive.
         </div>
 
+        <h1>Accounts</h1>
+        <div>
+            Currently, a user cannot have many accounts with the same name to avoid confusion.
+        </div>
+
         <h1>Admin endpoints</h1>
         <div>
             There are 4 backend endpoints designed to clean the database or manipulate it for testing and administration
