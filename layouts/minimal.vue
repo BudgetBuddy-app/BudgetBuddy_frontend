@@ -44,5 +44,4 @@
 </script>
 
 <style scoped>
-.router-link-exact-active {}
 </style>
