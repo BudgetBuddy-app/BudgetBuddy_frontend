@@ -10,7 +10,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     }
     else if (authStore.isAuthenticated() && to.path == '/') {
         //if user is authenticated, don't allow him to go to login page
-        return navigateTo('/dashboard')
+        return navigateTo('/statistics')
     }
 
 })

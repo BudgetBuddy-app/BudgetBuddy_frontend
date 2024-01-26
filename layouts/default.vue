@@ -4,8 +4,8 @@
             <nav class="px-10 flex">
                 <ul class="flex justify-between items-center w-10/12">
                     <li>
-                        <NuxtLink to="/dashboard">
-                            <Icon name="material-symbols:home" /> <span class="hidden lg:inline">dashboard</span>
+                        <NuxtLink to="/categories">
+                            <Icon name="material-symbols:folder-outline" /> <span class="hidden lg:inline">categories</span>
                         </NuxtLink>
                     </li>
                     <li>

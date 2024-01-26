@@ -40,6 +40,8 @@ let transactionSumPerAccountPerMonth = ref([])
 
 //TODO add an option to include investments into net worth, a ticker box or something
 
+//TODO add statisitcs about investments, maybe make a component and recicle itç
+
 //table variables
 const columns1 = [
     {

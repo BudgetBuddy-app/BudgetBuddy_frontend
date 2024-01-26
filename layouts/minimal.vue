@@ -4,7 +4,7 @@
             <nav>
                 <ul class="flex justify-center">
                     <li>
-                        <NuxtLink to="/dashboard">
+                        <NuxtLink to="/statistics">
                             <Icon name="material-symbols:home" />
                         </NuxtLink>
                     </li>
