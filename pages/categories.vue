@@ -28,14 +28,16 @@ const getCategories = async () => {
     //fill columns with all categories
     let auxObject = {
         key: 'date',
-        label: 'date'
+        label: 'date',
+        sortable: 'true'
     }
     columns.value.push(auxObject)
 
     for (let i = 0; i < response.length; i++) {
         auxObject = {
             key: response[i].name,
-            label: response[i].name
+            label: response[i].name,
+            sortable: 'true'
         }
 
         columns.value.push(auxObject)
