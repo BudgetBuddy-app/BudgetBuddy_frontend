@@ -5,7 +5,6 @@
         <h2 class="h-8">{{ mode }} transaction</h2>
       </template>
 
-
       <form v-if="mode != 'Delete'" @submit.prevent="submitForm">
         <label>Amount:</label>
         <UInput type="decimal" v-model="transactionForm.amount" />
@@ -19,7 +18,7 @@
         </div>
         <UInput type="text" v-model="transactionForm.category" />
         <label>Account:</label>
-        <USelectMenu v-model="selectedAccount" :options="accountList" option-attribute="name" />
+        <USelectMenu searchable v-model="selectedAccount" :options="accountList" option-attribute="name" />
         <label>Notes:</label>
         <UInput type="text" v-model="transactionForm.notes" />
         <UButton type="submit">Submit</UButton>
@@ -67,6 +66,8 @@ let categoryList = ref([]);
 const selectedAccount = ref(accountList[0])
 
 //TODO add a button on the transaction details page that also opens this modal to edit it
+
+//TODO add an option for categories to be selectable, or to imput a new one on the same line 
 
 //TODO if no account selected, gives error, but account should be optional, make a specific option that sends null to the DB
 const submitForm = async () => {

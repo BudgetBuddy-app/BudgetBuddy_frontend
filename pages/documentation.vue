@@ -86,6 +86,14 @@
             rounding errors.
         </div>
 
+        <h1>Currency conversion</h1>
+        <div>
+            Currency conversion is done through the free API from:
+            https://www.exchangerate-api.com/
+            It does have a daily limit, but when reached, after around 20mins the IP block will be reset and you will be
+            able to use it again
+        </div>
+
         <!--TODO add all technologies used and extensions-->
         <h1>Development</h1>
         <div>
