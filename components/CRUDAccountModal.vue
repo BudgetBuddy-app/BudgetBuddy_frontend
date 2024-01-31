@@ -19,7 +19,8 @@
       <template #footer>
         <div class="h-8">
           <span v-if="mode != 'Delete'">There can be many accounts with the same name.</span>
-          <span v-else><b>WARNING:</b> This change is permanent!</span>
+          <span v-else><b>WARNING:</b> This change is permanent, and will <b>delete all the transactions</b> associated
+            with this account!</span>
         </div>
       </template>
     </UCard>

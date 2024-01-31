@@ -94,7 +94,6 @@
             able to use it again
         </div>
 
-        <!--TODO add all technologies used and extensions-->
         <h1>Development</h1>
         <div>
             For the frontend, these technologies were used:

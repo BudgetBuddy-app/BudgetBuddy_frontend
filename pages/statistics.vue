@@ -38,10 +38,6 @@ let transactionSumPerAccountPerMonth = ref([])
 //TODO sometimes in the small top table, the decimals are not two but like 10, 	-463.96000000000004, and I'm not sure why
 //I already have a function to solve this but it's not working
 
-//TODO add an option to include investments into net worth, a ticker box or something
-
-//TODO add statisitcs about investments, maybe make a component and recicle it
-
 //table variables
 const columns1 = [
     {

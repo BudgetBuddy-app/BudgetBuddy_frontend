@@ -103,8 +103,6 @@ const getBudgets = async () => {
 }
 getBudgets();
 
-//TODO get transactions and calculate how much we actually spent between those dates
-
 const closeModal = () => {
     isOpen.value = false
 }

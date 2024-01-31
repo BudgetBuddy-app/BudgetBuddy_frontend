@@ -26,7 +26,7 @@
 </template>
  
 <script setup>
-//TODO when file is changed after selecting no error is displayed on screen but it shows one on console
+//TODO when file is changed after selecting no error is displayed on screen but it shows one on console, validate ALL errors
 import { useRuntimeConfig } from '#app'
 import { useAuthStore } from '~/store/auth'
 
