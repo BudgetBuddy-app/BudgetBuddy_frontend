@@ -109,6 +109,12 @@
             (mysql2), among others.
             - MySQL
         </div>
+        <div>
+            Some problems encountered for future development:
+            Make sure to convert dates received from the server to the local timezone, if not, data might be inacurrate,
+            sometimes by a full day on the case of removing an hour at midnight,
+            making the assocaited day <b>24 at 23:00</b>, instead of <b>25 at 00:00</b>, for example.
+        </div>
     </div>
 </template>
 
