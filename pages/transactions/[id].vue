@@ -16,7 +16,7 @@ const { id } = useRoute().params
 
 const transaction = ref({})
 
-const getTransactions = async () => {
+const getTransaction = async () => {
     try {
         let response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/transactions/' + id, {
             method: 'GET',
@@ -30,5 +30,5 @@ const getTransactions = async () => {
         console.error('ERROR:', error)
     }
 }
-getTransactions();
+getTransaction();
 </script>
