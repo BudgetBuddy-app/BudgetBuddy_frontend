@@ -49,6 +49,26 @@ const itemsPerPageComputed = computed({
 });
 
 const filteredRows = computed(() => {
+
+    //replace empty cell values with '' so that the text "failed to get cell value" is not displayed
+    for (let i = 0; i < props.itemList.length; i++) {
+        let properties = Object.keys(props.itemList[i])
+
+        //get new values that are missing
+        const allColumnNames = props.columns.map(obj => obj.key);
+        const missingProperties = allColumnNames.filter(item => !properties.includes(item));
+
+        if (missingProperties != undefined) {
+            let itemMissingProperties = props.itemList[i]
+
+            for (let j = 0; j < missingProperties.length; j++) {
+                itemMissingProperties[missingProperties[j]] = ''
+            }
+
+            props.itemList[i] = itemMissingProperties
+        }
+    }
+
     if (!q.value) {
         return props.itemList;
     }
