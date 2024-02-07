@@ -67,6 +67,15 @@ const filteredRows = computed(() => {
 
             props.itemList[i] = itemMissingProperties
         }
+
+        //ALSO in this loop, unrealted to the last code, if the property is a float, we round it to 2 decimals
+        for (const property in props.itemList[i]) {
+            if (typeof props.itemList[i][property] === 'number') {
+                if (!Number.isInteger(props.itemList[i][property])) {
+                    props.itemList[i][property] = parseFloat(props.itemList[i][property].toFixed(2));
+                }
+            }
+        }
     }
 
     if (!q.value) {

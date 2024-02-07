@@ -70,7 +70,7 @@ const getUserAccounts = async () => {
         columns2.value.push(accountForTable)
 
         for (let account of accountList.value) {
-            netWorth.value += turnIntoTwoDecimal(account.total_amount);
+            netWorth.value += turnIntoFloat(account.total_amount);
 
             //generate columns for the account list
             let accountForTable = {
@@ -117,11 +117,11 @@ const transformStatistics = (rawData) => {
         });
 
         if (result >= 0) {
-            monthSums[result].amount += turnIntoTwoDecimal(rawData[i].transactionSum)
+            monthSums[result].amount += turnIntoFloat(rawData[i].transactionSum)
         } else {
             auxMonth = {
                 date: auxDate,
-                amount: turnIntoTwoDecimal(rawData[i].transactionSum)
+                amount: turnIntoFloat(rawData[i].transactionSum)
             }
             monthSums.push(auxMonth)
         }
@@ -155,7 +155,7 @@ const transformStatistics = (rawData) => {
     transactionSumPerAccountPerMonth.value = accountSums
 }
 
-const turnIntoTwoDecimal = (number) => {
+const turnIntoFloat = (number) => {
     return parseFloat(parseFloat(number).toFixed(2));
 }
 </script>

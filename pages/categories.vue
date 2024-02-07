@@ -81,10 +81,10 @@ const getTransactions = async () => {
             });
 
             if (result >= 0) {
-                auxArray2[result][currentTransactionCategoryName] = (auxArray2[result][currentTransactionCategoryName] || 0) + turnIntoTwoDecimal(currentTransactionAmount);
+                auxArray2[result][currentTransactionCategoryName] = (auxArray2[result][currentTransactionCategoryName] || 0) + turnIntoFloat(currentTransactionAmount);
             } else {
                 auxMonth.date = currentTransactionDate
-                auxMonth[currentTransactionCategoryName] = turnIntoTwoDecimal(currentTransactionAmount)
+                auxMonth[currentTransactionCategoryName] = turnIntoFloat(currentTransactionAmount)
                 auxArray2.push(auxMonth)
                 auxMonth = {}
             }
@@ -97,7 +97,7 @@ const getTransactions = async () => {
 }
 getTransactions();
 
-const turnIntoTwoDecimal = (number) => {
+const turnIntoFloat = (number) => {
     return parseFloat(parseFloat(number).toFixed(2));
 }
 </script>
