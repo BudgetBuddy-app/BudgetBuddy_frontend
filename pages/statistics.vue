@@ -112,8 +112,8 @@ const transformStatistics = (rawData) => {
 
     //get how much you spent per month in all accounts
     for (let i = 0; i < rawData.length; i++) {
-        //TODO fix this to be able to filter yyyy-mm instead of yyyy-m 
-        auxDate = rawData[i].year + "/" + rawData[i].month
+        // Pad the month with a leading zero if it's less than  10
+        auxDate = rawData[i].year + "-" + ("0" + rawData[i].month).slice(-2);
 
         var result = monthSums.findIndex(obj => {
             return obj.date === auxDate;
@@ -136,8 +136,8 @@ const transformStatistics = (rawData) => {
     let auxObj = {}
 
     for (let i = 0; i < rawData.length; i++) {
-        auxDate = rawData[i].year + "/" + rawData[i].month
-
+        // Pad the month with a leading zero if it's less than  10
+        auxDate = rawData[i].year + "-" + ("0" + rawData[i].month).slice(-2);
 
         var result = accountSums.findIndex(obj => {
             return obj.date === auxDate;
