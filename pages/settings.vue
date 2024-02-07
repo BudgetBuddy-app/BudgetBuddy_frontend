@@ -11,6 +11,11 @@
         <UButton type="submit">Submit</UButton>
     </form>
 
+    <div>
+        <span>Download CSV with all transactions</span>
+        <UButton @click="downloadTransactionsCSV">Download CSV</UButton>
+    </div>
+
     <h1>Quick currency convertion</h1>
     <form @submit.prevent="submitCurrencyConversion">
         <label>Original Currency:</label>
@@ -95,4 +100,27 @@ const handleFileChange = (event) => {
     selectedFile = event.target.files[0];
 }
 
+const downloadTransactionsCSV = async () => {
+    try {
+        const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/csv/transactions/user/' + authenticatedUser.id);
+
+        downloadFile(response, 'transactionsExport.csv', 'text/csv');
+
+        toast.add({ title: "File downloaded successfully" })
+    } catch (error) {
+        toast.add({ title: "ERROR downloading file: " + error })
+    }
+}
+
+function downloadFile(content, fileName, contentType) {
+    const blob = new Blob([content], { type: contentType });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', fileName);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+}
 </script>
