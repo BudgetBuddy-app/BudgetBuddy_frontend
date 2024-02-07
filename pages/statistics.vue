@@ -35,9 +35,6 @@ let netWorth = ref();
 let transactionSumPerMonth = ref([]);
 let transactionSumPerAccountPerMonth = ref([])
 
-//TODO sometimes in the small top table, the decimals are not two but like 10, 	-463.96000000000004, and I'm not sure why
-//I already have a function to solve this but it's not working
-
 //table variables
 const columns1 = [
     {

@@ -121,21 +121,19 @@ const getTransactions = async () => {
         //count the value spent on each budget
         for (let i = 0; i < budgetList.value.length; i++) {
             let budget = budgetList.value[i];
-            let auxBudgetStartDate = parseDateString(budget.start_date);
-            let auxBudgetEndDate = parseDateString(budget.end_date);
+            let auxBudgetStartDate = new Date(budget.start_date);
+            let auxBudgetEndDate = new Date(budget.end_date);
             budget.spent = 0;
 
             for (let j = 0; j < transactionList.value.length; j++) {
                 let transaction = transactionList.value[j];
-                let auxTransactionDate = parseDateString(transaction.date);
+                let auxTransactionDate = new Date(transaction.date);
 
                 if (auxBudgetEndDate >= auxTransactionDate && auxBudgetStartDate <= auxTransactionDate) {
                     budget.spent += parseFloat(transaction.amount);
                 }
             }
         }
-        //TODO sometimes the final budget.spent has a ton of decimal cases, -381.9800000000001	I had the sme preblem in statistics
-
     } catch (error) {
         console.error('ERROR:', error)
     }
@@ -143,13 +141,6 @@ const getTransactions = async () => {
 
 const closeModal = () => {
     isOpen.value = false
-}
-
-function parseDateString(dateString) {
-    //converts dd/mm/yyyy into a date object
-    const parts = dateString.split('/');
-    const dateObj = new Date(parts[2], parts[1] - 1, parts[0]);
-    return dateObj;
 }
 
 </script>
