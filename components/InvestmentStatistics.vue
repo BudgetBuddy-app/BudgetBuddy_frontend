@@ -67,6 +67,9 @@ const calculateStatisicstOnInvestments = () => {
         statisticSums.value.totalPortfolio += auxObj.currentTotalPrice
     }
     statisticSums.value.totalGainPercentage = (statisticSums.value.totalInvested / statisticSums.value.totalGain).toFixed(2)
+    statisticSums.value.totalInvested = statisticSums.value.totalInvested.toFixed(2)
+    statisticSums.value.totalPortfolio = statisticSums.value.totalPortfolio.toFixed(2)
+    statisticSums.value.totalGain = statisticSums.value.totalGain.toFixed(2)
     investmentStatisitcs.value = auxList
 }
 
