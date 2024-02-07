@@ -2,7 +2,7 @@
     <div>
         Total statisitcs sums:
         <div>Total invested: {{ statisticSums.totalInvested }}</div>
-        <div>Total gained: {{ statisticSums.totalGain }}</div>
+        <div>Total gained: {{ statisticSums.totalGain }} ({{ statisticSums.totalGainPercentage }}%)</div>
         <div>Total portfolio worth: {{ statisticSums.totalPortfolio }}</div>
     </div>
     <CustomTable :columns="columns" :itemList="investmentStatisitcs" />
@@ -47,6 +47,7 @@ const calculateStatisicstOnInvestments = () => {
 
     statisticSums.value.totalInvested = 0
     statisticSums.value.totalGain = 0
+    statisticSums.value.totalGainPercentage = 0
     statisticSums.value.totalPortfolio = 0
 
     let auxList = []
@@ -65,6 +66,7 @@ const calculateStatisicstOnInvestments = () => {
         statisticSums.value.totalGain += auxObj.gain
         statisticSums.value.totalPortfolio += auxObj.currentTotalPrice
     }
+    statisticSums.value.totalGainPercentage = (statisticSums.value.totalInvested / statisticSums.value.totalGain).toFixed(2)
     investmentStatisitcs.value = auxList
 }
 

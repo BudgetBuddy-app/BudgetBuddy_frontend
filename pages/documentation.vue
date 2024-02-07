@@ -84,6 +84,9 @@
             pay.
             The obtained price of the stock might be inaccurate, innacuracies up to 0.1 have been noted, normally due to
             rounding errors.
+
+            Right now, investment statisitcs are being calculated assuming that all investments are in the same currency,
+            this might change in the future.
         </div>
 
         <h1>Currency conversion</h1>
