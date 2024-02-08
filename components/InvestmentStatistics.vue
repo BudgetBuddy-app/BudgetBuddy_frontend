@@ -21,15 +21,15 @@ const statisticSums = ref({})
 const columns = [
     {
         key: 'symbol',
-        label: 'symbol',
+        label: 'Symbol',
         sortable: 'true'
     }, {
         key: 'pricePaid',
-        label: 'Total Price Paid',
+        label: 'Price Paid (all shares)',
         sortable: 'true'
     }, {
         key: 'currentTotalPrice',
-        label: 'Current Total Price (all shares)',
+        label: 'Current Price (all shares)',
         sortable: 'true'
     }, {
         key: 'markup',
@@ -38,6 +38,11 @@ const columns = [
     }, {
         key: 'gain',
         label: 'Gain',
+        sortable: 'true'
+    },
+    {
+        key: 'weightInPortfolio',
+        label: 'Weight In Portfolio',
         sortable: 'true'
     }
 ]
@@ -57,7 +62,7 @@ const calculateStatisicstOnInvestments = () => {
         auxObj.symbol = props.investmentList[i].symbol
         auxObj.pricePaid = props.investmentList[i].owned_shares * props.investmentList[i].average_purchase_price
         auxObj.currentTotalPrice = props.investmentList[i].owned_shares * props.investmentList[i].price
-        auxObj.markup = ((auxObj.currentTotalPrice / auxObj.pricePaid) * 100) - 100
+        auxObj.markup = (((auxObj.currentTotalPrice / auxObj.pricePaid) * 100) - 100).toFixed(2) + '%'
         auxObj.gain = auxObj.currentTotalPrice - (props.investmentList[i].average_purchase_price * props.investmentList[i].owned_shares)
 
         auxList.push(auxObj)
@@ -71,6 +76,12 @@ const calculateStatisicstOnInvestments = () => {
     statisticSums.value.totalPortfolio = statisticSums.value.totalPortfolio.toFixed(2)
     statisticSums.value.totalGain = statisticSums.value.totalGain.toFixed(2)
     investmentStatisitcs.value = auxList
+
+    //see the percentage each investment has in my total portfolio
+    for (let i = 0; i < investmentStatisitcs.value.length; i++) {
+        investmentStatisitcs.value[i].weightInPortfolio = ((investmentStatisitcs.value[i].currentTotalPrice / statisticSums.value.totalPortfolio) * 100).toFixed(2) + '%'
+    }
+
 }
 
 watch(() => props.calculateStatistics, (newVal, oldVal) => {
