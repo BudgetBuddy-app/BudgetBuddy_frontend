@@ -7,11 +7,7 @@
                 <CustomTable :columns="columns1" :itemList="transactionSumPerMonth" />
             </div>
             <div class="w-full lg:w-1/2">
-                <div>Total net worth (sum of all accounts): {{ netWorth }} </div>
-                <div v-for="account in accountList">
-                    <UBadge>{{ account.name }}</UBadge>
-                    <span>{{ account.total_amount }}</span>
-                </div>
+                <NetWorthStatistics :accountList="accountList" />
             </div>
         </div>
         <div>
@@ -31,7 +27,6 @@ const authStore = useAuthStore();
 let authenticatedUser = authStore.getAuthenticatedUser()
 
 let accountList = ref([]);
-let netWorth = ref();
 let transactionSumPerMonth = ref([]);
 let transactionSumPerAccountPerMonth = ref([])
 
@@ -59,7 +54,6 @@ const getUserAccounts = async () => {
             method: 'GET',
         })
         accountList.value = response;
-        netWorth.value = 0;
 
         let accountForTable = {
             key: 'date',
@@ -70,7 +64,6 @@ const getUserAccounts = async () => {
         columns2.value.push(accountForTable)
 
         for (let account of accountList.value) {
-            netWorth.value += turnIntoFloat(account.total_amount);
 
             //generate columns for the account list
             let accountForTable = {
