@@ -48,7 +48,6 @@ const calculateNetWorth = async () => {
         netWorthSum += parseFloat(account.total_amount);
     }
 
-    console.log(netWorthSum);
     netWorth.value = netWorthSum.toFixed(2);
 };
 
