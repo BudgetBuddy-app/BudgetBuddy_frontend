@@ -97,6 +97,20 @@
             able to use it again
         </div>
 
+        <h1>Initial configurations (.env files)</h1>
+        <div>
+            There are 2 .env files, one for the frontend and one for the backend.
+
+            the backend one contains:
+            PORT = which port will be used by the backend, defaults to 5000 in case it is not decalred or left emty
+            JWT_SECRET_KEY = this si the secret key that will be used to generate tokens to maintain iser sessions,can be
+            filled with any password the user deems strong enough
+
+            the frontend one contains:
+            BACKEND_API_BASE_PATH = url to make calls to the backend api, will be defult to "http://localhost:5000" if not
+            filled
+        </div>
+
         <h1>Development</h1>
         <div>
             For the frontend, these technologies were used:
