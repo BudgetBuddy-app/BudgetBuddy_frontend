@@ -58,6 +58,14 @@ const columns = [
         label: 'Spent Amount',
         sortable: 'true'
     }, {
+        key: 'amountLeft',
+        label: 'Amount Left (or overspent)',
+        sortable: 'true'
+    }, {
+        key: 'amountLeftPerDay',
+        label: 'Amount Left (or overspent) per day',
+        sortable: 'true'
+    }, {
         key: 'actions'
     }
 ]
@@ -133,6 +141,9 @@ const getTransactions = async () => {
                     budget.spent += parseFloat(transaction.amount);
                 }
             }
+
+            budget.amountLeft = parseFloat(budget.amount) + parseFloat(budget.spent)
+            budget.amountLeftPerDay = budget.amountLeft / calculateDaysBetween(auxBudgetStartDate, auxBudgetEndDate)
         }
     } catch (error) {
         console.error('ERROR:', error)
@@ -143,4 +154,18 @@ const closeModal = () => {
     isOpen.value = false
 }
 
+function calculateDaysBetween(date1, date2) {
+    const oneDay = 1000 * 60 * 60 * 24; // Milliseconds in a day
+    const date1Time = date1.getTime();
+    const date2Time = date2.getTime();
+
+    // Ensure date1 is the earliest date
+    if (date1Time > date2Time) {
+        [date1Time, date2Time] = [date2Time, date1Time];
+    }
+
+    // Calculate the difference in time and convert to days
+    const diffInDays = Math.round(Math.abs(date2Time - date1Time) / oneDay);
+    return diffInDays;
+}
 </script>
