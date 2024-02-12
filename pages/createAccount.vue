@@ -40,7 +40,7 @@ const submitForm = async () => {
     })
 
     toast.add({ title: "SUCCESS: account created successfully" })
-    await navigateTo('/dashboard')
+    await navigateTo('/')
 
   } catch (error) {
     toast.add({ title: "ERROR: " + error })
