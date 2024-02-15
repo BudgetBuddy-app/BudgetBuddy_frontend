@@ -11,14 +11,7 @@
         <CRUDTransactionModal :isOpen="isOpen" :mode="mode" :transactionToEdit="transactionToEdit"
             @update:isOpen="isOpen = $event" @refreshList="getTransactions()" @closeModal="closeModal()" />
 
-        <div>showing {{ transactionList.length }} transaction:</div>
-        <UTable :rows="transactionList" :columns="columns">
-            <template #actions-data="{ row }">
-                <UDropdown :items="items(row)">
-                    <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
-                </UDropdown>
-            </template>
-        </UTable>
+        <CustomTable :columns="columns" :items="items" :itemList="transactionList" />
     </div>
 </template>
 
@@ -32,7 +25,6 @@ const runtimeConfig = useRuntimeConfig()
 const authStore = useAuthStore();
 let authenticatedUser = authStore.getAuthenticatedUser()
 
-
 const isOpen = ref(false)
 const transactionList = ref([]);
 const mode = ref('')
@@ -42,28 +34,35 @@ const transactionToEdit = ref({})
 const columns = [
     {
         key: 'id',
-        label: 'ID'
+        label: 'ID',
+        sortable: 'true'
     }, {
         key: 'amount',
-        label: 'Amount'
+        label: 'Amount',
+        sortable: 'true'
     }
     , {
         key: 'date',
-        label: 'Date (yyyy-mm-dd)'
+        label: 'Date (yyyy-mm-dd)',
+        sortable: 'true'
     }
     , {
         key: 'recipient',
-        label: 'Recipient'
+        label: 'Recipient',
+        sortable: 'true'
     }
     , {
         key: 'notes',
-        label: 'Notes'
+        label: 'Notes',
+        sortable: 'true'
     }, {
         key: 'category_name',
-        label: 'Category'
+        label: 'Category',
+        sortable: 'true'
     }, {
         key: 'account_name',
-        label: 'Account'
+        label: 'Account',
+        sortable: 'true'
     }, {
         key: 'actions'
     }
@@ -86,8 +85,17 @@ const items = (row) => [
     }]
 ]
 
-//functions
+const reDirect = async (type, row) => {
+    if (type == 'Details') {
+        await navigateTo('/transactions/' + row.id);
+    } else {
+        mode.value = type
+        transactionToEdit.value = row
+        isOpen.value = true
+    }
+}
 
+//functions
 const getTransactions = async () => {
     try {
         const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/transactions/user/' + authenticatedUser.id, {
@@ -108,16 +116,6 @@ const getTransactions = async () => {
     }
 }
 getTransactions();
-
-const reDirect = async (type, row) => {
-    if (type == 'Details') {
-        await navigateTo('/transactions/' + row.id);
-    } else {
-        mode.value = type
-        transactionToEdit.value = row
-        isOpen.value = true
-    }
-}
 
 const closeModal = () => {
     isOpen.value = false

@@ -1,41 +1,41 @@
 <template>
     <div class="flex flex-col min-h-screen">
-        <header class="bg-primary py-3 sticky top-0">
+        <header class="bg-primary py-3 sticky top-0 z-50">
             <nav class="px-10 flex">
                 <ul class="flex justify-between items-center w-10/12">
                     <li>
-                        <NuxtLink to="/dashboard">
-                            <Icon name="material-symbols:home" /> dashboard
+                        <NuxtLink to="/categories">
+                            <Icon name="material-symbols:folder-outline" /> <span class="hidden lg:inline">categories</span>
                         </NuxtLink>
                     </li>
                     <li>
                         <NuxtLink to="/transactions">
-                            <Icon name="grommet-icons:transaction" /> transactions
+                            <Icon name="grommet-icons:transaction" /> <span class="hidden lg:inline">transactions</span>
                         </NuxtLink>
                     </li>
                     <li>
                         <NuxtLink to="/budgets">
-                            <Icon name="carbon:money" /> budgets
+                            <Icon name="carbon:money" /> <span class="hidden lg:inline">budgets</span>
                         </NuxtLink>
                     </li>
                     <li>
                         <NuxtLink to="/statistics">
-                            <Icon name="solar:chart-bold" /> statistics
+                            <Icon name="solar:chart-bold" /> <span class="hidden lg:inline">statistics</span>
                         </NuxtLink>
                     </li>
                     <li>
                         <NuxtLink to="/accounts">
-                            <Icon name="bytesize:creditcard" /> accounts
+                            <Icon name="bytesize:creditcard" /><span class="hidden lg:inline"> accounts</span>
                         </NuxtLink>
                     </li>
                     <li>
                         <NuxtLink to="/investments">
-                            <Icon name="charm:chart-line" /> investments
+                            <Icon name="charm:chart-line" /> <span class="hidden lg:inline">investments</span>
                         </NuxtLink>
                     </li>
                 </ul>
-                <ul class="flex justify-end items-center right-0 w-2/12">
-                    <li class="mr-5">
+                <ul class="block lg:flex justify-end items-center right-0 w-2/12">
+                    <li class="lg:mr-5">
                         <NuxtLink to="/settings">
                             <Icon name="ic:baseline-settings" size="30" />
                         </NuxtLink>

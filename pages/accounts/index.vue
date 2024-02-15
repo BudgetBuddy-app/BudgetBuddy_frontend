@@ -11,17 +11,9 @@
         <CRUDAccountModal :isOpen="isOpen" :mode="mode" :accountToEdit="accountToEdit" @update:isOpen="isOpen = $event"
             @refreshList="getUserAccounts()" @closeModal="closeModal()" />
 
-        <div>showing {{ accountList.length }} accounts:</div>
-        <UTable :rows="accountList" :columns="columns">
-            <template #actions-data="{ row }">
-                <UDropdown :items="items(row)">
-                    <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
-                </UDropdown>
-            </template>
-        </UTable>
+        <CustomTable :columns="columns" :items="items" :itemList="accountList" />
     </div>
 </template>
- 
 
 <script setup>
 //setups and imports
@@ -42,13 +34,16 @@ const accountToEdit = ref({})
 const columns = [
     {
         key: 'id',
-        label: 'ID'
+        label: 'ID',
+        sortable: 'true'
     }, {
         key: 'name',
-        label: 'Account Name'
+        label: 'Account Name',
+        sortable: 'true'
     }, {
         key: 'total_amount',
-        label: 'Total amount'
+        label: 'Total amount',
+        sortable: 'true'
     }, {
         key: 'actions'
     }
@@ -72,6 +67,16 @@ const items = (row) => [
 ]
 
 //functions
+const reDirect = async (type, row) => {
+    if (type == 'Details') {
+        await navigateTo('/accounts/' + row.id);
+    } else {
+        mode.value = type
+        accountToEdit.value = row
+        isOpen.value = true
+    }
+}
+
 const getUserAccounts = async () => {
     try {
         const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts/user/' + authenticatedUser.id, {
@@ -83,16 +88,6 @@ const getUserAccounts = async () => {
     }
 }
 getUserAccounts();
-
-const reDirect = async (type, row) => {
-    if (type == 'Details') {
-        await navigateTo('/accounts/' + row.id);
-    } else {
-        mode.value = type
-        accountToEdit.value = row
-        isOpen.value = true
-    }
-}
 
 const closeModal = () => {
     isOpen.value = false

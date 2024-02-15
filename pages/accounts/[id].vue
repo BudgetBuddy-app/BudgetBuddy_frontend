@@ -12,14 +12,7 @@
             :parentAccount="accountInfo" @update:isOpen="isOpen = $event" @refreshList="getAccountTransactions()"
             @closeModal="closeModal()" />
 
-        <div>showing {{ transactionList.length }} transaction:</div>
-        <UTable :rows="transactionList" :columns="columns">
-            <template #actions-data="{ row }">
-                <UDropdown :items="items(row)">
-                    <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
-                </UDropdown>
-            </template>
-        </UTable>
+        <CustomTable :columns="columns" :items="items" :itemList="transactionList" />
     </div>
 </template>
 
@@ -41,25 +34,31 @@ const transactionToEdit = ref({})
 const columns = [
     {
         key: 'id',
-        label: 'ID'
+        label: 'ID',
+        sortable: 'true'
     }, {
         key: 'amount',
-        label: 'Amount'
+        label: 'Amount',
+        sortable: 'true'
     }
     , {
         key: 'date',
-        label: 'Date (yyyy-mm-dd)'
+        label: 'Date (yyyy-mm-dd)',
+        sortable: 'true'
     }
     , {
         key: 'recipient',
-        label: 'Recipient'
+        label: 'Recipient',
+        sortable: 'true'
     }
     , {
         key: 'notes',
-        label: 'Notes'
+        label: 'Notes',
+        sortable: 'true'
     }, {
         key: 'category_name',
-        label: 'Category'
+        label: 'Category',
+        sortable: 'true'
     }, {
         key: 'actions'
     }
@@ -83,6 +82,26 @@ const items = (row) => [
 ]
 
 //functions
+const reDirect = async (type, row) => {
+    switch (type) {
+        case 'Details':
+            await navigateTo('/transactions/' + row.id);
+            break;
+        case 'Edit':
+            mode.value = 'Edit'
+            transactionToEdit.value = row
+            isOpen.value = true
+            break;
+        case 'Delete':
+            mode.value = 'Delete'
+            transactionToEdit.value = row
+            isOpen.value = true
+            break;
+        default:
+            console.error('Invalid type');
+    }
+}
+
 const getAccountInfo = async () => {
     try {
         const response = await $fetch(runtimeConfig.public.BACKEND_API_BASE_PATH + '/accounts/' + id, {
@@ -115,26 +134,6 @@ const getAccountTransactions = async () => {
     }
 }
 getAccountTransactions();
-
-const reDirect = async (type, row) => {
-    switch (type) {
-        case 'Details':
-            await navigateTo('/transactions/' + row.id);
-            break;
-        case 'Edit':
-            mode.value = 'Edit'
-            transactionToEdit.value = row
-            isOpen.value = true
-            break;
-        case 'Delete':
-            mode.value = 'Delete'
-            transactionToEdit.value = row
-            isOpen.value = true
-            break;
-        default:
-            console.error('Invalid type');
-    }
-}
 
 const closeModal = () => {
     isOpen.value = false

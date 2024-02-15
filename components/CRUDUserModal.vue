@@ -18,8 +18,6 @@
         <UButton type="submit">Submit</UButton>
       </form>
 
-      <!--TODO validate that they are submitting their old password, adn that they submit the new one twice, so 3 fields in total-->
-
       <div v-else class="flex flex-col items-center">
         <div class="pb-4">Are you sure you want to delete the <br /> <b> {{ authenticatedUser.name }} ( {{
           authenticatedUser.email

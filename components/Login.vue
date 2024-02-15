@@ -33,7 +33,7 @@ async function login() {
       authStore.setAuthenticatedUser(response.User[0])
       toast.add({ title: "Login successful!" })
 
-      await navigateTo('/dashboard')
+      await navigateTo('/statistics')
     } else {
       toast.add({ title: 'Login failed:' + response.Message })
     }

@@ -15,6 +15,7 @@
  
 <script setup>
 import { useRuntimeConfig } from '#app'
+const toast = useToast()
 
 definePageMeta({
   layout: 'minimal'
@@ -38,10 +39,11 @@ const submitForm = async () => {
       }
     })
 
-    //TODO, here we go automatilcally to main page, but validate the response code and see if it was successful or not, to shown an error
-    await navigateTo('/dashboard')
+    toast.add({ title: "SUCCESS: account created successfully" })
+    await navigateTo('/')
 
   } catch (error) {
+    toast.add({ title: "ERROR: " + error })
     console.error('ERROR:', error)
   }
 };

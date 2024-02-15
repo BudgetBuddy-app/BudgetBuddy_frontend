@@ -4,26 +4,21 @@
         <div class="flex">
             <div class="w-full lg:w-1/2 border">
                 <div>Total spent per month (all accounts)</div>
-                <UTable :rows="transactionSumPerMonth" :columns="columns1">
-                </UTable>
+                <CustomTable :columns="columns1" :itemList="transactionSumPerMonth" />
             </div>
             <div class="w-full lg:w-1/2">
-                <div>Total net worth (sum of all accounts): {{ netWorth }} </div>
-                <div v-for="account in accountList">
-                    <UBadge>{{ account.name }}</UBadge>
-                    <span>{{ account.total_amount }}</span>
-                </div>
+                <NetWorthStatistics :accountList="accountList" />
             </div>
         </div>
         <div>
             <div>Total spent per month per account</div>
-            <UTable :rows="transactionSumPerAccountPerMonth" :columns="columns2">
-            </UTable>
+            <CustomTable :columns="columns2" :itemList="transactionSumPerAccountPerMonth" />
         </div>
     </div>
 </template>
 
 <script setup>
+//setups and imports
 import { useRuntimeConfig } from '#app'
 import { useAuthStore } from '~/store/auth'
 
@@ -32,21 +27,21 @@ const authStore = useAuthStore();
 let authenticatedUser = authStore.getAuthenticatedUser()
 
 let accountList = ref([]);
-let netWorth = ref();
 let transactionSumPerMonth = ref([]);
 let transactionSumPerAccountPerMonth = ref([])
-
-//TODO sometimes in the small top table, the decimals are not two but like 10, 	-463.96000000000004, and I'm not sure why
-    //I already have a function to solve this but it's not working
 
 //table variables
 const columns1 = [
     {
         key: 'date',
-        label: 'month'
+        label: 'month',
+        sortable: 'true',
+        sortable: 'true'
     }, {
         key: 'amount',
-        label: 'amount'
+        label: 'amount',
+        sortable: 'true',
+        sortable: 'true'
     }
 ]
 
@@ -59,22 +54,22 @@ const getUserAccounts = async () => {
             method: 'GET',
         })
         accountList.value = response;
-        netWorth.value = 0;
 
         let accountForTable = {
             key: 'date',
-            label: 'month'
+            label: 'month',
+            sortable: 'true'
         }
 
         columns2.value.push(accountForTable)
 
         for (let account of accountList.value) {
-            netWorth.value += turnIntoTwoDecimal(account.total_amount);
 
             //generate columns for the account list
             let accountForTable = {
                 key: account.name,
-                label: account.name
+                label: account.name,
+                sortable: 'true'
             }
             columns2.value.push(accountForTable)
         }
@@ -107,18 +102,19 @@ const transformStatistics = (rawData) => {
 
     //get how much you spent per month in all accounts
     for (let i = 0; i < rawData.length; i++) {
-        auxDate = rawData[i].year + "/" + rawData[i].month
+        // Pad the month with a leading zero if it's less than  10
+        auxDate = rawData[i].year + "-" + ("0" + rawData[i].month).slice(-2);
 
         var result = monthSums.findIndex(obj => {
             return obj.date === auxDate;
         });
 
         if (result >= 0) {
-            monthSums[result].amount += turnIntoTwoDecimal(rawData[i].transactionSum)
+            monthSums[result].amount += turnIntoFloat(rawData[i].transactionSum)
         } else {
             auxMonth = {
                 date: auxDate,
-                amount: turnIntoTwoDecimal(rawData[i].transactionSum)
+                amount: turnIntoFloat(rawData[i].transactionSum)
             }
             monthSums.push(auxMonth)
         }
@@ -130,8 +126,8 @@ const transformStatistics = (rawData) => {
     let auxObj = {}
 
     for (let i = 0; i < rawData.length; i++) {
-        auxDate = rawData[i].year + "/" + rawData[i].month
-
+        // Pad the month with a leading zero if it's less than  10
+        auxDate = rawData[i].year + "-" + ("0" + rawData[i].month).slice(-2);
 
         var result = accountSums.findIndex(obj => {
             return obj.date === auxDate;
@@ -152,7 +148,7 @@ const transformStatistics = (rawData) => {
     transactionSumPerAccountPerMonth.value = accountSums
 }
 
-const turnIntoTwoDecimal = (number) => {
+const turnIntoFloat = (number) => {
     return parseFloat(parseFloat(number).toFixed(2));
 }
 </script>
