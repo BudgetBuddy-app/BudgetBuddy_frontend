@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "budget-buddy-frontend",
   "private": true,
   "type": "module",
   "scripts": {
