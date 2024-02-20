@@ -103,8 +103,8 @@
 
             the backend one contains:
             PORT = which port will be used by the backend, defaults to 5000 in case it is not decalred or left emty
-            JWT_SECRET_KEY = this si the secret key that will be used to generate tokens to maintain iser sessions,can be
-            filled with any password the user deems strong enough
+            JWT_SECRET_KEY = this is the secret key that will be used to generate tokens to maintain user sessions,can be
+            filled with any password the user deems strong enough, if not declared, will be set by default
             CONNECTION_LIMIT = how many users can use the appliction simultaneously, defaults to 10 if not defined
 
             the frontend one contains:

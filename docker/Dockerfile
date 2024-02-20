@@ -1,5 +1,5 @@
 # Dockerfile
-FROM node:20.11
+FROM node:20.11 as base
 
 WORKDIR /app
 
@@ -13,4 +13,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-CMD [ "npx", "nuxi", "dev" ]
+CMD [ "npm", "start" ]
