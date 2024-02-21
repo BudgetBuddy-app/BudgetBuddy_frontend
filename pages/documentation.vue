@@ -103,9 +103,15 @@
 
             the backend one contains:
             PORT = which port will be used by the backend, defaults to 5000 in case it is not decalred or left emty
-            JWT_SECRET_KEY = this si the secret key that will be used to generate tokens to maintain iser sessions,can be
-            filled with any password the user deems strong enough
+            JWT_SECRET_KEY = this is the secret key that will be used to generate tokens to maintain user sessions,can be
+            filled with any password the user deems strong enough, if not declared, will be set by default
             CONNECTION_LIMIT = how many users can use the appliction simultaneously, defaults to 10 if not defined
+            DB_PASSWORD= the password that the backend uses to connect with the database, should be the same as the
+            "MYSQL_ROOT_PASSWORD" declared in the docker-compose.yml
+            ADMIN_PASSWORD=the password the app administrator can login with, with the respectiv email "admin1@mail.com", if left blank, will default to 'password'
+            MYSQL_MODE= if set to "docker", will assume it is being run on a docker container, and will try to connect to a running
+            docker image of MySQL instead of a local instance of one (localhost), if set to "local", will try to connect to a
+            local instance instead, defaults to "docker" to be able to run a docker container without a .env for ease of use
 
             the frontend one contains:
             BACKEND_API_BASE_PATH = url to make calls to the backend api, will be defult to "http://localhost:5000" if not
